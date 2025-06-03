@@ -56,13 +56,55 @@ app.post("/signin", async (req: Request, res: Response) => {
   }
 });
 
-app.post("/form", middleware, (req: Request, res: Response) => {
-  res.json({ msg: "Hello world from form" });
+//create a form,authentication required
+app.post("/form", middleware, async (req: Request, res: Response) => {
+  try {
+    console.log(req.body);
+    const form = await client.form.create({
+      data: {
+        title: req.body.title || "Title1",
+        blocks: req.body.blocks,
+        userId: req.userId,
+      },
+    });
+
+    res.json({ msg: "form created", id: form.id });
+  } catch (error) {
+    console.log(error);
+    res.json({ msg: "Somthing went wrong" });
+  }
 });
 
-app.post("/form/:id", middleware, (req: Request, res: Response) => {});
+//update/edit a form authentication required
+app.put("/form/:id", middleware, (req: Request, res: Response) => {});
 
-app.get("/forms", middleware, (req: Request, res: Response) => {});
+//get all forms by the user
+app.get("/forms", middleware, async (req: Request, res: Response) => {});
+
+//delete a form, authentication required
+app.delete("/form/:id", middleware, (req: Request, res: Response) => {});
+
+//get a form /public url
+app.get("/form/:id", async (req: Request, res: Response) => {
+  try {
+    if (!req.params.id) {
+      res.json({ msg: "no id" });
+    }
+    console.log(req.params.id);
+    const form = await client.form.findFirst({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    res.json({ msg: "form fetched", form });
+  } catch (error) {
+    res.json({ msg: "Somthing went wrong" });
+  }
+});
+
+//create submission /public url
+app.get("/form/:id/submission", (req: Request, res: Response) => {});
 
 app.listen(port, () => {
   console.log(`Server is running at ${port}`);
