@@ -21,7 +21,7 @@ export default function SideBar() {
   }, []);
 
   return (
-    <div className="relative h-full">
+    <div className=" ">
       {/* make this also */}
       {!open && (
         <Image
@@ -30,7 +30,7 @@ export default function SideBar() {
           width={20}
           height={20}
           onClick={() => setOpen(true)}
-          className="bg-slate-100 p-1 rounded-md cursor-pointer absolute top-4 left-2 z-10"
+          className="bg-slate-100 p-1 rounded-md cursor-pointer fixed top-0 left-0"
         />
       )}
 
@@ -38,6 +38,7 @@ export default function SideBar() {
         tabIndex={0}
         className={`
           ${open ? "w-72 translate-x-0" : "w-0 translate-x-0 invisible overflow-hidden"}
+          fixed left-0 top-0
           transition-all duration-200 transform ease-in-out
           group/sidebar outline-none border-r-2 border-gray-200 bg-white h-full px-4 py-2
         `}
