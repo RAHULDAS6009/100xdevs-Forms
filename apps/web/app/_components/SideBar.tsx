@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import useAuth from "../_hooks/useAuth";
 
 export default function SideBar() {
   const [open, setOpen] = useState<boolean>(true);
+  const auth = useAuth();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -21,8 +23,8 @@ export default function SideBar() {
   }, []);
 
   return (
-    <div className=" ">
-      {/* make this also */}
+    <div className="z-20">
+      {/* Show open button if sidebar is closed */}
       {!open && (
         <Image
           src="/rightdoublearrow.svg"
@@ -37,8 +39,7 @@ export default function SideBar() {
       <div
         tabIndex={0}
         className={`
-          ${open ? "w-72 translate-x-0" : "w-0 translate-x-0 invisible overflow-hidden"}
-          fixed left-0 top-0
+          ${open ? "w-72 translate-x-0" : "w-0 translate-x-0 invisible overflow-hidden"}       
           transition-all duration-200 transform ease-in-out
           group/sidebar outline-none border-r-2 border-gray-200 bg-white h-full px-4 py-2
         `}
@@ -52,10 +53,9 @@ export default function SideBar() {
               width={28}
               height={28}
             />
-            Rahul
+            {"User"}
           </span>
 
-          {/* Show on sidebar hover */}
           <div className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200">
             <div className="relative group/arrow ">
               <Image
@@ -67,10 +67,8 @@ export default function SideBar() {
                 className="transition-all duration-200 ease-in-out cursor-pointer 
                            hover:bg-slate-100 size-6 p-1 rounded-md"
               />
-              {/* Tooltip on arrow hover */}
               <div
-                className="absolute mt-2 px-2 py-1
-                translate-x-1/2 
+                className="absolute mt-2 px-2 py-1 translate-x-1/2 
                            text-xs text-white bg-gray-700 rounded shadow-lg
                            invisible group-hover/arrow:visible group-hover/arrow:translate-x-0 ease-in-out   transition-transform duration-75 
                            whitespace-nowrap "
