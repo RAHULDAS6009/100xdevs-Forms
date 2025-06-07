@@ -1,19 +1,23 @@
-import { PartialBlock } from "@blocknote/core";
+import { filterSuggestionItems, PartialBlock } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import {
   BasicTextStyleButton,
   CreateLinkButton,
   FormattingToolbar,
   FormattingToolbarController,
+  getDefaultReactSlashMenuItems,
+  SuggestionMenuController,
   useCreateBlockNote,
 } from "@blocknote/react";
+
 import "@blocknote/mantine/style.css";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import "../globals.css";
 import { useDispatch } from "react-redux";
 import { addBlock } from "../../lib/slices/BlockSlice";
 import { schema } from "./EditorComponents/schema";
+import { insertAlert } from "./EditorComponents/InsetComponent";
 
 export default function Editor({ blocks }: { blocks: PartialBlock[] }) {
   const dispatch = useDispatch();
@@ -67,6 +71,25 @@ export default function Editor({ blocks }: { blocks: PartialBlock[] }) {
             <CreateLinkButton key={"createLinkButton"} />
           </FormattingToolbar>
         )}
+      />
+
+      {/* slash menu controller */}
+      <SuggestionMenuController
+        triggerCharacter={"/"}
+        getItems={async (query) => {
+          // Gets all default slash menu items.
+          const defaultItems = getDefaultReactSlashMenuItems(editor);
+          // Finds index of last item in "Basic blocks" group.
+
+          const lastBasicBlockIndex = defaultItems.findLastIndex(
+            (item) => item.group === "Basic blocks"
+          );
+          // Inserts the Alert item as the last item in the "Basic blocks" group.
+          defaultItems.splice(lastBasicBlockIndex + 1, 0, insertAlert(editor));
+
+          // Returns filtered items based on the query.
+          return filterSuggestionItems(defaultItems, query);
+        }}
       />
     </BlockNoteView>
   );

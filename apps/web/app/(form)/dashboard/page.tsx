@@ -1,7 +1,5 @@
+import DashBoard from "../../_components/pages/DashBoard";
+
 export default function Home() {
-  return (
-    <>
-      <div className="">Home Get all form components</div>
-    </>
-  );
+  return <DashBoard />;
 }

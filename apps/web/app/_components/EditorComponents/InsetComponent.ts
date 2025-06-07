@@ -2,7 +2,7 @@ import { insertOrUpdateBlock } from "@blocknote/core";
 import { schema } from "./schema";
 import { RiAlertFill } from "react-icons/ri";
 
-const insertAlert = (editor: typeof schema.BlockNoteEditor) => ({
+export const insertAlert = (editor: typeof schema.BlockNoteEditor) => ({
   title: "Alert",
   subtext: "Alert for emphasizing text",
   onItemClick: () =>
