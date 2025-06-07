@@ -2,6 +2,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useAppSelector } from "../../../../../lib/hook";
 
 const EditorPreview = dynamic(
   () => import("../../../../_components/EditorPreview"),
@@ -14,13 +15,13 @@ const Editor = dynamic(() => import("../../../../_components/Editor"), {
 export default function Home() {
   const [open, setOpen] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
-
+  const blocks = useAppSelector((state) => state.blocks.blocks);
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key == "Backspace") {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }
+    // if (e.key == "Backspace") {
+    //   if (inputRef.current) {
+    //     inputRef.current.focus();
+    //   }
+    // }
   };
 
   useEffect(() => {
@@ -41,7 +42,6 @@ export default function Home() {
           : "relative h-full w-full scale-100 opacity-90"
       }`}
     >
-      {/* i think we have to make it as a component */}
       <div
         className={`fixed  w-full ${open ? "z-80 top-10 right-20" : "z-10 top-0 right-0 bg-white"} flex justify-end gap-5 pr-5 `}
       >
@@ -69,11 +69,9 @@ export default function Home() {
           />
           <div className=" -translate-x-18 w-full">
             {open ? (
-              <EditorPreview
-                blocks={[{ type: "paragraph", content: "hello new" }]}
-              />
+              <EditorPreview blocks={blocks} />
             ) : (
-              <Editor />
+              <Editor blocks={blocks} />
             )}
           </div>
         </div>

@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import blockReducer from "./slices/formSlice";
+import blockReducer from "./slices/BlockSlice";
 
 export const store = configureStore({
   reducer: {
-    form: blockReducer,
+    blocks: blockReducer,
   },
 });
 

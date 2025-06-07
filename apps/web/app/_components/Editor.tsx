@@ -1,16 +1,23 @@
-import { Block, PartialBlock } from "@blocknote/core";
+import { PartialBlock } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/mantine/style.css";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import "../globals.css";
-export default function Editor() {
-  const [blocks, setBlocks] = useState<Block[]>();
-  const editorRef = useRef<HTMLDivElement>(null);
+import { useDispatch } from "react-redux";
+import { addBlock } from "../../lib/slices/BlockSlice";
+
+export default function Editor({ blocks }: { blocks: PartialBlock[] }) {
+  const dispatch = useDispatch();
+
+  const editor = useCreateBlockNote({
+    initialContent: blocks,
+  });
+
   function handleKeyDown(e: KeyboardEvent) {
-    if (e.key == "Enter" || e.key == "ArrowDown") {
-      editor.focus();
+    if (e.key === "Enter") {
+      editor?.focus();
     }
   }
 
@@ -19,17 +26,14 @@ export default function Editor() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [editorRef]);
-  const editor = useCreateBlockNote({
-    initialContent: [{ type: "paragraph" }],
-  });
+  }, []);
+
   return (
     <BlockNoteView
       editor={editor}
-      theme={"light"}
+      theme="light"
       onChange={() => {
-        setBlocks(editor.document);
-        localStorage.setItem("blocks", JSON.stringify(blocks));
+        dispatch(addBlock(editor.document as PartialBlock[]));
       }}
     />
   );

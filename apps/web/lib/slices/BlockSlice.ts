@@ -2,16 +2,16 @@ import { Block, PartialBlock } from "@blocknote/core";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface Form {
+export interface Blocks {
   blocks: PartialBlock[];
 }
 
-const initialState: Form = {
-  blocks: [],
+const initialState: Blocks = {
+  blocks: [{ type: "paragraph", content: "" }],
 };
 
-export const formSlice = createSlice({
-  name: "form",
+const blockSlice = createSlice({
+  name: "blocks",
   initialState,
   reducers: {
     addBlock: (state, action: PayloadAction<PartialBlock[]>) => {
@@ -21,6 +21,6 @@ export const formSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addBlock } = formSlice.actions;
+export const { addBlock } = blockSlice.actions;
 
-export default formSlice.reducer;
+export default blockSlice.reducer;

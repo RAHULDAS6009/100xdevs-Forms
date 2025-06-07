@@ -3,7 +3,6 @@ import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
 const EditorPreview = dynamic(
   () => import("../../../_components/EditorPreview"),
   { ssr: false }
