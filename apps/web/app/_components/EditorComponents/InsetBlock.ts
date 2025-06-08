@@ -1,4 +1,4 @@
-import { insertOrUpdateBlock } from "@blocknote/core";
+import { insertBlocks, insertOrUpdateBlock } from "@blocknote/core";
 import { schema } from "./schema";
 import { group } from "console";
 
@@ -33,5 +33,23 @@ export const insertInput = (editor: typeof schema.BlockNoteEditor) => ({
     insertOrUpdateBlock(editor, {
       type: "input",
     }),
+  group: "Basic blocks",
+});
+
+export const insertSelect = (editor: typeof schema.BlockNoteEditor) => ({
+  title: "Drop Down",
+  // subtext: "",
+  onItemClick: () => {
+    const currentBlock = editor.getTextCursorPosition().block;
+    editor.insertBlocks(
+      [
+        { type: "label", content: "" },
+        { type: "select", content: "" },
+      ],
+      currentBlock,
+      "after"
+    );
+    editor.removeBlocks([currentBlock.id]);
+  },
   group: "Basic blocks",
 });

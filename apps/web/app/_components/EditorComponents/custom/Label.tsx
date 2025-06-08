@@ -18,12 +18,12 @@ export const LabelBlock = createReactBlockSpec(
       return (
         <div className="relative w-full">
           {props.block.content.length == 0 && (
-            <span className="absolute left-3 text-sm   text-gray-400 pointer-events-none  select-none">
+            <span className="absolute left-1 text-sm   text-gray-400 pointer-events-none  select-none">
               Label text...
             </span>
           )}
           <div
-            className=" w-full px-3    text-sm text-gray-800 outline-none"
+            className=" w-full px-1   text-sm text-gray-800 outline-none"
             ref={props.contentRef}
           />
         </div>

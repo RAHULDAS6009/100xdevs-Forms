@@ -1,7 +1,7 @@
 import { defaultProps } from "@blocknote/core";
 import { createReactBlockSpec } from "@blocknote/react";
 
-export const Input = createReactBlockSpec(
+export const InputBlock = createReactBlockSpec(
   {
     type: "input",
     propSchema: {
