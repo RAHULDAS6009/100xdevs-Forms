@@ -1,5 +1,7 @@
 import PublishPage from "../../../_components/pages/PublishPage";
 
-export default function Home({ params }: { params: { formid: string } }) {
-  return <PublishPage formid={params.formid} />;
+export default async function Home({ params }: { params: { formid: string } }) {
+  const formId = (await params).formid;
+
+  return <PublishPage formid={formId} />;
 }

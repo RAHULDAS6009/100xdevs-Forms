@@ -17,7 +17,7 @@ import "../globals.css";
 import { useDispatch } from "react-redux";
 import { addBlock } from "../../lib/slices/BlockSlice";
 import { schema } from "./EditorComponents/schema";
-import { insertAlert } from "./EditorComponents/InsetComponent";
+import { insertInput, insertLabel } from "./EditorComponents/InsetComponent";
 
 export default function Editor({ blocks }: { blocks: PartialBlock[] }) {
   const dispatch = useDispatch();
@@ -85,7 +85,8 @@ export default function Editor({ blocks }: { blocks: PartialBlock[] }) {
             (item) => item.group === "Basic blocks"
           );
           // Inserts the Alert item as the last item in the "Basic blocks" group.
-          defaultItems.splice(lastBasicBlockIndex + 1, 0, insertAlert(editor));
+          defaultItems.splice(lastBasicBlockIndex + 1, 0, insertLabel(editor));
+          defaultItems.splice(lastBasicBlockIndex + 1, 0, insertInput(editor));
 
           // Returns filtered items based on the query.
           return filterSuggestionItems(defaultItems, query);

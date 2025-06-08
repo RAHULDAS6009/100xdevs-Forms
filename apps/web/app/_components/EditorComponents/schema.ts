@@ -1,11 +1,13 @@
 import { BlockNoteSchema, defaultBlockSpecs } from "@blocknote/core";
-import { Alert } from "./custom/Alert";
+import { LabelBlock } from "./custom/Label";
+import { Input } from "./custom/Input";
 
 export const schema = BlockNoteSchema.create({
   blockSpecs: {
     // Adds all default blocks.
     ...defaultBlockSpecs,
-    // Adds the Alert block.
-    alert: Alert,
+    // Adds the Label block.
+    label: LabelBlock,
+    input: Input,
   },
 });
