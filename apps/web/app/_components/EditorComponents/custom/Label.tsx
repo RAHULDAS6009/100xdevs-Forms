@@ -7,7 +7,7 @@ export const LabelBlock = createReactBlockSpec(
     propSchema: {
       textAlignment: defaultProps.textAlignment,
       textColor: defaultProps.textColor,
-      type: {
+      text: {
         default: "",
       },
     },

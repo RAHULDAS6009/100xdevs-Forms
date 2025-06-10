@@ -12,6 +12,7 @@ export const insertLabel = (editor: typeof schema.BlockNoteEditor) => ({
     // Alert block.
     insertOrUpdateBlock(editor, {
       type: "label",
+      content: [],
     }),
   // aliases: [
   //   "h",

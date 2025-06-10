@@ -1,33 +1,24 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { useAppSelector } from "../../../lib/hook";
-import dynamic from "next/dynamic";
-
-const EditorPreview = dynamic(() => import("../EditorPreview"), { ssr: false });
-const Editor = dynamic(() => import("../Editor"), { ssr: false });
+import { useEffect, useMemo, useRef, useState } from "react";
+import EditorPreview from "../EditorPreview";
+import { Editor } from "../DynamicEditor";
 
 export default function EditPage({ formid }: { formid: string }) {
   const [open, setOpen] = useState<boolean>(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const blocks = useAppSelector((state) => state.blocks.blocks);
-  const handleKeyDown = (e: KeyboardEvent) => {
-    // if (e.key == "Backspace") {
-    //   if (inputRef.current) {
-    //     inputRef.current.focus();
-    //   }
-    // }
-  };
 
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [inputRef]);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleKeyDown = (e: KeyboardEvent) => {};
+
+  // useEffect(() => {
+  //   if (inputRef.current) {
+  //     inputRef.current.focus();
+  //   }
+  //   window.addEventListener("keydown", handleKeyDown);
+  //   return () => {
+  //     window.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, [inputRef, open]);
 
   return (
     <div
@@ -41,7 +32,7 @@ export default function EditPage({ formid }: { formid: string }) {
         className={`fixed  w-full ${open ? "z-80 top-10 right-20" : "z-10 top-0 right-0 bg-white"} flex justify-end gap-5 pr-5 `}
       >
         <div className={"cursor-pointer"} onClick={() => setOpen(!open)}>
-          {open ? "Back to Editor" : "Preview"}
+          {!open ? "Preview" : "Back to Editor"}
         </div>
         {!open && <div className="cursor-pointer">Publish</div>}
       </div>
@@ -63,11 +54,7 @@ export default function EditPage({ formid }: { formid: string }) {
             type="text"
           />
           <div className=" -translate-x-18 w-full">
-            {open ? (
-              <EditorPreview blocks={blocks} />
-            ) : (
-              <Editor blocks={blocks} />
-            )}
+            {open ? <EditorPreview /> : <Editor />}
           </div>
         </div>
       </div>

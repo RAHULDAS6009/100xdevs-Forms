@@ -1,4 +1,4 @@
-import { filterSuggestionItems, PartialBlock } from "@blocknote/core";
+import { Block, filterSuggestionItems, PartialBlock } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import {
   BasicTextStyleButton,
@@ -12,36 +12,38 @@ import {
 
 import "@blocknote/mantine/style.css";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../globals.css";
-import { useDispatch } from "react-redux";
-import { addBlock } from "../../lib/slices/BlockSlice";
 import { schema } from "./EditorComponents/schema";
 import {
   insertInput,
   insertLabel,
   insertSelect,
 } from "./EditorComponents/InsetBlock";
-
-export default function Editor({ blocks }: { blocks: PartialBlock[] }) {
-  const dispatch = useDispatch();
-
+export default function Editor() {
+  const [blocks, setBlocks] = useState<any>();
   const editor = useCreateBlockNote({
     schema: schema,
-    initialContent: blocks,
+    initialContent: [{ type: "paragraph" }],
   });
 
-  function handleKeyDown(e: KeyboardEvent) {
-    if (e.key === "Enter") {
-      editor?.focus();
-    }
+  function onChange() {
+    setBlocks(editor.document);
+    localStorage.setItem("blocks", JSON.stringify(blocks, null, 2));
+    // dispatch(addBlock(editor.document as PartialBlock[]));
   }
 
+  // function handleKeyDown(e: KeyboardEvent) {
+  //   if (e.key === "Enter") {
+  //     editor?.focus();
+  //   }
+  // }
+
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+    // window.addEventListener("keydown", handleKeyDown);
+    // return () => {
+    //   window.removeEventListener("keydown", handleKeyDown);
+    // };
   }, []);
 
   return (
@@ -49,51 +51,32 @@ export default function Editor({ blocks }: { blocks: PartialBlock[] }) {
       editor={editor}
       formattingToolbar={false}
       theme="light"
-      onChange={() => {
-        dispatch(addBlock(editor.document as PartialBlock[]));
-      }}
+      onChange={onChange}
     >
       <FormattingToolbarController
         formattingToolbar={() => (
           <FormattingToolbar>
-            <BasicTextStyleButton
-              basicTextStyle="bold"
-              key={"boldStyleButton"}
-            />
-            <BasicTextStyleButton
-              basicTextStyle="italic"
-              key={"italicStyleButton"}
-            />
-            <BasicTextStyleButton
-              basicTextStyle="underline"
-              key={"underlineStyleButton"}
-            />
-            <BasicTextStyleButton
-              basicTextStyle="strike"
-              key={"strikeStyleButton"}
-            />
-            <CreateLinkButton key={"createLinkButton"} />
+            <BasicTextStyleButton basicTextStyle="bold" />
+            <BasicTextStyleButton basicTextStyle="italic" />
+            <BasicTextStyleButton basicTextStyle="underline" />
+            <BasicTextStyleButton basicTextStyle="strike" />
+            <CreateLinkButton />
           </FormattingToolbar>
         )}
       />
 
-      {/* slash menu controller */}
       <SuggestionMenuController
         triggerCharacter={"/"}
         getItems={async (query) => {
-          // Gets all default slash menu items.
           const defaultItems = getDefaultReactSlashMenuItems(editor);
-          // Finds index of last item in "Basic blocks" group.
-
           const lastBasicBlockIndex = defaultItems.findLastIndex(
             (item) => item.group === "Basic blocks"
           );
-          // Inserts the custom items as the last item in the "Basic blocks" group.
+
           defaultItems.splice(lastBasicBlockIndex + 1, 0, insertLabel(editor));
           defaultItems.splice(lastBasicBlockIndex + 1, 0, insertInput(editor));
           defaultItems.splice(lastBasicBlockIndex + 1, 0, insertSelect(editor));
 
-          // Returns filtered items based on the query.
           return filterSuggestionItems(defaultItems, query);
         }}
       />

@@ -59,8 +59,8 @@ export const SelectBlock = createReactBlockSpec(
             <>
               {firstSelectedBlock && (
                 <select>
-                  {filteredSelectBlocks.map((block) => (
-                    <option>
+                  {filteredSelectBlocks.map((block, index) => (
+                    <option key={index}>
                       {block.content
                         .map((inline) => ("text" in inline ? inline.text : ""))
                         .join("")}
