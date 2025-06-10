@@ -1,6 +1,7 @@
 import { insertBlocks, insertOrUpdateBlock } from "@blocknote/core";
 import { schema } from "./schema";
 import { group } from "console";
+import { title } from "process";
 
 export const insertLabel = (editor: typeof schema.BlockNoteEditor) => ({
   title: "Label",
@@ -51,6 +52,16 @@ export const insertSelect = (editor: typeof schema.BlockNoteEditor) => ({
       "after"
     );
     editor.removeBlocks([currentBlock.id]);
+  },
+  group: "Basic blocks",
+});
+
+export const insertSubmit = (editor: typeof schema.BlockNoteEditor) => ({
+  title: "submit",
+  onItemClick: () => {
+    insertOrUpdateBlock(editor, {
+      type: "submit",
+    });
   },
   group: "Basic blocks",
 });

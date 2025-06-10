@@ -18,11 +18,6 @@ export const InputBlock = createReactBlockSpec(
     render: (props) => {
       const isEmpty = props.block.content.length === 0;
 
-      useEffect(() => {
-        console.log("on mount");
-        console.log("from custom  input block", props.editor.isEditable);
-      }, [props.editor.isEditable]);
-
       // Safely extract plain text from block content
       const blockText = props.block.content
         .map((inline) => ("text" in inline ? inline.text : ""))
@@ -44,6 +39,7 @@ export const InputBlock = createReactBlockSpec(
             </div>
           ) : (
             <input
+              placeholder={blockText}
               type="text"
               className="w-full px-3 text-sm text-gray-800 border border-gray-300 rounded"
             />

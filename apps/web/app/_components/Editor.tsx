@@ -1,11 +1,22 @@
-import { Block, filterSuggestionItems, PartialBlock } from "@blocknote/core";
+import {
+  Block,
+  BlockNoteEditor,
+  BlockSchema,
+  filterSuggestionItems,
+  PartialBlock,
+} from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import {
+  AddBlockButton,
   BasicTextStyleButton,
   CreateLinkButton,
+  DragHandleButton,
   FormattingToolbar,
   FormattingToolbarController,
   getDefaultReactSlashMenuItems,
+  SideMenu,
+  SideMenuController,
+  SideMenuProps,
   SuggestionMenuController,
   useCreateBlockNote,
 } from "@blocknote/react";
@@ -20,30 +31,33 @@ import {
   insertLabel,
   insertSelect,
 } from "./EditorComponents/InsetBlock";
+import { RemoveBlockButton } from "./EditorComponents/sidemenu/RemoveBlockButton";
+
 export default function Editor() {
-  const [blocks, setBlocks] = useState<any>();
+  const [blocks, setBlocks] = useState<PartialBlock[]>([{ type: "paragraph" }]);
+
   const editor = useCreateBlockNote({
     schema: schema,
-    initialContent: [{ type: "paragraph" }],
+    initialContent: [...blocks, { type: "submit" }],
   });
 
   function onChange() {
-    setBlocks(editor.document);
+    setBlocks(editor.document as PartialBlock[]);
     localStorage.setItem("blocks", JSON.stringify(blocks, null, 2));
     // dispatch(addBlock(editor.document as PartialBlock[]));
   }
 
-  // function handleKeyDown(e: KeyboardEvent) {
-  //   if (e.key === "Enter") {
-  //     editor?.focus();
-  //   }
-  // }
+  function handleKeyDown(e: KeyboardEvent) {
+    if (e.key === "Enter") {
+      editor?.focus();
+    }
+  }
 
   useEffect(() => {
-    // window.addEventListener("keydown", handleKeyDown);
-    // return () => {
-    //   window.removeEventListener("keydown", handleKeyDown);
-    // };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   return (
@@ -62,6 +76,20 @@ export default function Editor() {
             <BasicTextStyleButton basicTextStyle="strike" />
             <CreateLinkButton />
           </FormattingToolbar>
+        )}
+      />
+
+      <SideMenuController
+        sideMenu={(props) => (
+          <>
+            <SideMenu {...props}>
+              <div className="flex items-center bg-white gap-2  justify-center ">
+                <AddBlockButton {...props} />
+                <RemoveBlockButton {...props} />
+                <DragHandleButton {...props} />
+              </div>
+            </SideMenu>
+          </>
         )}
       />
 
