@@ -1,10 +1,22 @@
 import Button from "@repo/ui/button";
+import Image from "next/image";
 export function Hero() {
   return (
-    <div className=" flex flex-col justify-between h-[350px] pt-20  p-5">
+    <div className=" flex flex-col  h-[950px] pt-20  p-5">
       <div className="flex flex-col gap-6">
         <div className="text-6xl font-bold text-center">
-          The simplest way to create forms
+          The{" "}
+          <span className=" relative">
+            simplest
+            <Image
+              className="w-full absolute bottom-0 right-0 mt-2"
+              src={"/title-highlight-2.png"}
+              width={100}
+              height={50}
+              alt=""
+            />
+          </span>{" "}
+          way to create forms
         </div>
         <div className="text-2xl font-[500] text-gray-500 text-center max-w-2xl  mx-auto">
           Say goodbye to boring forms. Meet 100XForms — the free, intuitive form
@@ -12,7 +24,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="flex flex-col mx-auto items-center gap-1 ">
+      <div className="flex flex-col mx-auto items-center gap-1  pt-16">
         <Button variant="primary" className="flex items-center gap-3">
           Create a free form
           <svg
@@ -31,6 +43,34 @@ export function Hero() {
           </svg>
         </Button>
         <span className="text-xs text-slate-400">No sign up required</span>
+      </div>
+
+      {/*  */}
+      <div className="mx-auto max-w-2xl    pt-12 drop-shadow-2xl transition-all ease-in-out duration-300 scale-100 hover:scale-105 cursor-pointer    ">
+        <div
+          className="h-10 rounded-t-2xl flex gap-2 pt-3
+        pl-2 bg-neutral-100
+        border-t border-x border-neutral-300
+
+        "
+        >
+          <div className="rounded-full size-4 bg-neutral-300"></div>
+          <div className="rounded-full size-4 bg-neutral-300"></div>
+          <div className="rounded-full size-4 bg-neutral-300"></div>
+        </div>
+        <video
+          className="border  border-neutral-300"
+          muted
+          autoPlay
+          loop
+          playsInline
+        >
+          <source
+            src="https://tally.so/videos/demo/just-type-card.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ export default function Logo() {
       onMouseLeave={() => sethovered(!hovered)}
       className={`flex group transform transition-all ease-in-out duration-500 opacity-70 text-gray-800 hover:ml-0.5  hover:opacity-100 ${dmSerifDisplayItalic.className}  hover:text-[1.55rem]  cursor-pointer text-black text-2xl   `}
     >
-      100x {hovered && <AnimatedText animationType={"one"} />}
+      100x <AnimatedText animationType={"one"} />
       {/* </span> */}
     </button>
   );
@@ -42,10 +42,7 @@ function AnimatedText({ animationType }) {
     <div className="w-full text-center font-black uppercase  border-b-2 border-gray-300 ">
       <div key={resetKey} className={`animate ${animationType}`}>
         {words.map((char, i) => (
-          <span
-            key={i}
-            style={{ animationDelay: `${i * Math.random() * 0.3}s` }}
-          >
+          <span key={i} style={{ animationDelay: `${i * 0.04}s` }}>
             {char === " " ? "\u00A0" : char}
           </span>
         ))}
