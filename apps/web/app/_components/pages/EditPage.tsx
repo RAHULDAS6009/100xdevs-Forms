@@ -4,21 +4,21 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import EditorPreview from "../EditorPreview";
 import { Editor } from "../DynamicEditor";
 
-export default function EditPage({ formid }: { formid: string }) {
+export default function EditPage({ formid }: { formid?: string }) {
   const [open, setOpen] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const handleKeyDown = (e: KeyboardEvent) => {};
 
-  // useEffect(() => {
-  //   if (inputRef.current) {
-  //     inputRef.current.focus();
-  //   }
-  //   window.addEventListener("keydown", handleKeyDown);
-  //   return () => {
-  //     window.removeEventListener("keydown", handleKeyDown);
-  //   };
-  // }, [inputRef, open]);
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [inputRef, open]);
 
   return (
     <div

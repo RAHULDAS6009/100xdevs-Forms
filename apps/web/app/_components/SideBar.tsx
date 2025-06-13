@@ -25,7 +25,7 @@ export default function SideBar() {
 
   return (
     <>
-      {!(router.split("/")[1] == "r") && (
+      {!(router.split("/")[1] == "r") && !router.endsWith("create") && (
         <div className="z-20">
           {/* Show open button if sidebar is closed */}
           {!open && (

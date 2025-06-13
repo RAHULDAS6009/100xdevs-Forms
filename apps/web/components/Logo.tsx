@@ -39,7 +39,7 @@ function AnimatedText({ animationType }) {
   };
 
   return (
-    <div className="w-full text-center font-black uppercase  border-b-2 border-gray-300 ">
+    <div className="w-full text-center font-black uppercase  border-b-2 border-gray-300 outline-none">
       <div key={resetKey} className={`animate ${animationType}`}>
         {words.map((char, i) => (
           <span key={i} style={{ animationDelay: `${i * 0.04}s` }}>
