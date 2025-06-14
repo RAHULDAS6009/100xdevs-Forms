@@ -26,7 +26,9 @@ export default function SideBar() {
   return (
     <>
       {!(router.split("/")[1] == "r") && !router.endsWith("create") && (
-        <div className="z-20">
+        <div
+          className={`${open ? "z-20" : "outline-none border-r-2 border-gray-200"} `}
+        >
           {/* Show open button if sidebar is closed */}
           {!open && (
             <Image
@@ -35,22 +37,22 @@ export default function SideBar() {
               width={20}
               height={20}
               onClick={() => setOpen(true)}
-              className="bg-slate-100 p-1 rounded-md cursor-pointer fixed top-0 left-0"
+              className="bg-slate-100 p-1 rounded-md cursor-pointer fixed top-3 left-2 "
             />
           )}
 
           <div
             tabIndex={0}
             className={`
-          ${open ? "w-72 translate-x-0" : "w-0 translate-x-0 invisible overflow-hidden"}       
+          ${open ? "w-72 " : "w-0  invisible overflow-hidden"}       
           transition-all duration-200 transform ease-in-out
-          group/sidebar outline-none border-r-2 border-gray-200 bg-white h-full px-4 py-2
+          group/sidebar outline-none border-r-2 border-gray-200 bg-white  h-screen   px-4 py-2
         `}
           >
             <div className="flex justify-between items-center">
               <span className="font-semibold text-slate-600 flex items-center gap-1">
                 <Image
-                  className="cursor-pointer"
+                  className={`cursor-pointer transition-all ease-in-out ${!open ? "translate-y-8 -translate-x-3 visible z-20" : "translate-y-0"}`}
                   src="/user-profile.svg"
                   alt="user image"
                   width={28}

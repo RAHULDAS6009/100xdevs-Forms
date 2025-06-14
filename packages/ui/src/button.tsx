@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 interface ButtonProps {
   children: ReactNode;
-  variant: "primary" | "secondary";
+  variant: "primary" | "secondary" | "outlined";
   className?: string;
   onClick?: () => void;
 }
@@ -16,6 +16,7 @@ export default function Button({
   let variants = {
     primary: "bg-blue-500 hover:bg-blue-600 text-white",
     secondary: "bg-white hover:bg-gray-100 text-gray-400",
+    outlined: "border border-neutral-300",
   };
   return (
     <button
