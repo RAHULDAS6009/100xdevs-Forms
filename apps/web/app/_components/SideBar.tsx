@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 
 export default function SideBar() {
   const [open, setOpen] = useState<boolean>(true);
@@ -86,6 +86,13 @@ export default function SideBar() {
             </div>
 
             <div className="mt-4 space-y-2 text-gray-600 font-medium">
+              <div
+                onClick={() => {
+                  redirect("/dashboard");
+                }}
+              >
+                <SideComponent title="Home" />
+              </div>
               <div className="text-xs">Workspace</div>
               <SideComponent title="editing form" />
             </div>
@@ -100,13 +107,15 @@ function SideComponent({ title }: { title: string }) {
   return (
     <div className="pl-5 transition-all ease-in-out duration-200 bg-white text-slate-900 font-semibold text-sm hover:bg-slate-100 flex justify-between p-1 rounded-md cursor-pointer">
       {title}
-      <Image
-        className="hover:bg-slate-200 transition-all ease-in-out duration-200 rounded-md p-0.5 cursor-pointer"
-        src="/ellipsis-horizontal.svg"
-        alt="ellipsis-horizontal"
-        width={20}
-        height={20}
-      />
+      {title !== "Home" && (
+        <Image
+          className="hover:bg-slate-200 transition-all ease-in-out duration-200 rounded-md p-0.5 cursor-pointer"
+          src="/ellipsis-horizontal.svg"
+          alt="ellipsis-horizontal"
+          width={20}
+          height={20}
+        />
+      )}
     </div>
   );
 }

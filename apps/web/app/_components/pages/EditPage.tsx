@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import EditorPreview from "../EditorPreview";
 import { Editor } from "../DynamicEditor";
 import Button from "@repo/ui/button";
-import axios from "axios";
 export const BACKEND_URL = "http://localhost:5000";
 
 export default function EditPage({ formid }: { formid?: string }) {
@@ -24,12 +23,6 @@ export default function EditPage({ formid }: { formid?: string }) {
     };
   }, [inputRef, open]);
 
-  // async function onPublish() {
-  //   await axios.post(`${BACKEND_URL}/form`, {
-  //     title,
-  //     blcoks: JSON.stringify(),
-  //   });
-  // }
   return (
     <div
       className={`transition-all duration-200 ease-in-out ${

@@ -2,7 +2,8 @@
 import { ReactNode } from "react";
 
 interface InputProps {
-  onChange: () => void;
+  //cahnge the optional tag in onChange
+  onChange?: () => void;
   placeholder?: string;
   value?: string;
   type?: "text" | "password";
@@ -19,6 +20,7 @@ const variants = {
 export function Input({
   onChange,
   placeholder,
+  variant,
   value,
   type = "text",
   className,

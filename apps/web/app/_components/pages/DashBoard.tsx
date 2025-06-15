@@ -1,25 +1,77 @@
+"use client";
 import Button from "@repo/ui/button";
+import axios from "axios";
+import { BACKEND_URL } from "./EditPage";
+import { redirect } from "next/navigation";
+import { useForms } from "../../_hooks/useGetForms";
+import { Form } from "../../../types";
+import { Input } from "@repo/ui/input";
+import { useState } from "react";
 
 export default function DashBoard() {
+  const forms = useForms() || [];
+  // const [form, setForm] = useState();
+
   return (
-    <div className="mx-auto">
-      <Button variant="primary" className="flex gap-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="size-6"
+    <div className="w-full max-w-4xl mx-auto ">
+      <div className="flex">
+        <Input
+          variant="primary"
+          // onChange={() => {
+          //   setForm(e.target.value);
+          // }}
+        />
+        <Button
+          variant="primary"
+          onClick={async () => {
+            const res = await axios.post(
+              `${BACKEND_URL}/form`,
+              {
+                title: "Untitled",
+              },
+              {
+                headers: {
+                  Authorization: localStorage.getItem("token"),
+                },
+              }
+            );
+            console.log(res);
+            redirect(`/forms/${res.data.id}/edit`);
+          }}
+          className="flex gap-2"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 4.5v15m7.5-7.5h-15"
-          />
-        </svg>
-        Create a form
-      </Button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+          Create a form
+        </Button>
+      </div>
+
+      <div className="flex flex-col gap-5 pt-10">
+        {forms.map((form: Form, index) => {
+          return (
+            <div
+              onClick={() => redirect(`forms/${form.id}/edit`)}
+              key={index}
+              className="rounded-md p-4 bg-neutral-100 hover:bg-neutral-200"
+            >
+              <span className="font-medium text-neutral-400">{form.title}</span>
+              {form.isPublished ? "Edit" : null}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

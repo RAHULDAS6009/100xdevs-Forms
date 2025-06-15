@@ -63,7 +63,6 @@ app.post("/form", middleware, async (req: Request, res: Response) => {
     const form = await client.form.create({
       data: {
         title: req.body.title || "Untitled",
-        blocks: req.body.blocks,
         userId: req.userId,
       },
     });
@@ -75,11 +74,58 @@ app.post("/form", middleware, async (req: Request, res: Response) => {
   }
 });
 
+//Publish the id
+app.post(
+  "/form/publish/:id",
+  middleware,
+  async (req: Request, res: Response) => {
+    try {
+      const formId = req.params.id;
+
+      await client.form.update({
+        data: {
+          title: req.body.title || "Untitled",
+          blocks: req.body.blocks,
+          cover: req.body.cover,
+          logo: req.body.logo,
+          isPublished: req.body.isPublished,
+          userId: req.userId,
+        },
+        where: {
+          id: formId,
+        },
+      });
+
+      res.json({ msg: "form updated" });
+    } catch (error) {
+      console.log(error);
+      res.json({ msg: "Somthing went wrong" });
+    }
+  }
+);
+
 //update/edit a form authentication required
 app.put("/form/:id", middleware, (req: Request, res: Response) => {});
 
 //get all forms by the user
-app.get("/forms", middleware, async (req: Request, res: Response) => {});
+app.get("/forms", middleware, async (req: Request, res: Response) => {
+  try {
+    const forms = await client.form.findMany({
+      where: {
+        userId: req.userId,
+      },
+      select: {
+        title: true,
+        isPublished: true,
+        id: true,
+      },
+    });
+
+    res.json({ msg: "All forms", forms });
+  } catch (error) {
+    res.json({ msg: "Something went wrong" });
+  }
+});
 
 //delete a form, authentication required
 app.delete("/form/:id", middleware, (req: Request, res: Response) => {});
