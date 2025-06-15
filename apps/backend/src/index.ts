@@ -62,7 +62,7 @@ app.post("/form", middleware, async (req: Request, res: Response) => {
     console.log(req.body);
     const form = await client.form.create({
       data: {
-        title: req.body.title || "Title1",
+        title: req.body.title || "Untitled",
         blocks: req.body.blocks,
         userId: req.userId,
       },

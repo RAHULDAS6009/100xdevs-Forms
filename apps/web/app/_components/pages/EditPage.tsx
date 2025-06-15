@@ -4,9 +4,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import EditorPreview from "../EditorPreview";
 import { Editor } from "../DynamicEditor";
 import Button from "@repo/ui/button";
+import axios from "axios";
+export const BACKEND_URL = "http://localhost:5000";
 
 export default function EditPage({ formid }: { formid?: string }) {
   const [open, setOpen] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>("");
 
   const inputRef = useRef<HTMLInputElement>(null);
   const handleKeyDown = (e: KeyboardEvent) => {};
@@ -21,12 +24,18 @@ export default function EditPage({ formid }: { formid?: string }) {
     };
   }, [inputRef, open]);
 
+  // async function onPublish() {
+  //   await axios.post(`${BACKEND_URL}/form`, {
+  //     title,
+  //     blcoks: JSON.stringify(),
+  //   });
+  // }
   return (
     <div
       className={`transition-all duration-200 ease-in-out ${
         open
           ? "fixed inset-0 z-50 bg-white scale-110 opacity-100"
-          : "relative h-screen w-full scale-100 opacity-90"
+          : "relative h-screen overflow-y-auto w-full scale-100 opacity-90"
       }`}
     >
       <div
@@ -41,7 +50,7 @@ export default function EditPage({ formid }: { formid?: string }) {
         </div>
         {!open && (
           <div className="cursor-pointer">
-            <Button variant="primary">Preview</Button>
+            <Button variant="primary">Publish</Button>
           </div>
         )}
       </div>
@@ -58,6 +67,10 @@ export default function EditPage({ formid }: { formid?: string }) {
           <input
             tabIndex={-1}
             ref={inputRef}
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
             className="outline-none text-[50px] font-bold "
             placeholder="Title"
             type="text"

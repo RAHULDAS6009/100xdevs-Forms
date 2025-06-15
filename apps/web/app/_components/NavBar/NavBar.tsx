@@ -2,6 +2,7 @@ import Button from "@repo/ui/button";
 import Logo from "../../../components/Logo";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import LoadingIndicator from "../../../components/LoadingIndicator";
 
 export default function NavBar() {
   return (
@@ -17,7 +18,10 @@ export default function NavBar() {
           );
         })}
         <Button variant="primary">
-          <Link href={"/create"}>Create form</Link>
+          <Link href={"/create"} prefetch={false}>
+            Create form
+            <LoadingIndicator />
+          </Link>
         </Button>
       </div>
     </div>

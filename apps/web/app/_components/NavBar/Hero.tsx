@@ -1,6 +1,7 @@
 import Button from "@repo/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import LoadingIndicator from "../../../components/LoadingIndicator";
 export function Hero() {
   return (
     <div className=" flex flex-col  h-[950px] pt-20  p-5">
@@ -27,7 +28,10 @@ export function Hero() {
 
       <div className="flex flex-col mx-auto items-center gap-1  pt-16">
         <Button variant="primary" className="flex items-center gap-3">
-          <Link href={"/create"}>Create a free form</Link>
+          <Link href={"/create"} prefetch={false}>
+            Create a free form
+            <LoadingIndicator />
+          </Link>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
