@@ -17,11 +17,11 @@ export default function NavBar() {
             </Button>
           );
         })}
-        <Button variant="primary">
-          <Link href={"/create"} prefetch={false}>
-            Create form
-            <LoadingIndicator />
-          </Link>
+        <Button variant="primary" onClick={() => redirect("/create")}>
+          {/* <Link href={"/create"} prefetch={false}> */}
+          Create form
+          {/* <LoadingIndicator /> */}
+          {/* </Link> */}
         </Button>
       </div>
     </div>

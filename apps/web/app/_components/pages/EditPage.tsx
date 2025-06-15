@@ -4,11 +4,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import EditorPreview from "../EditorPreview";
 import { Editor } from "../DynamicEditor";
 import Button from "@repo/ui/button";
+import { useAppDispatch } from "../../../lib/hooks";
+import { setForms, updateForm } from "../../../lib/slices/FormSlice";
 export const BACKEND_URL = "http://localhost:5000";
 
 export default function EditPage({ formid }: { formid?: string }) {
+  if (!formid) return <div>NO form exsist</div>;
   const [open, setOpen] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
+  const dispatch = useAppDispatch();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const handleKeyDown = (e: KeyboardEvent) => {};
@@ -34,9 +38,26 @@ export default function EditPage({ formid }: { formid?: string }) {
       <div
         className={`fixed  w-full ${open ? "z-80 top-10 right-15" : "z-10 top-0 right-0 bg-white"} flex justify-end gap-5 pr-5 py-2 `}
       >
-        <div className={"cursor-pointer"} onClick={() => setOpen(!open)}>
+        <div
+          className={"cursor-pointer"}
+          onClick={() => {
+            setOpen(!open);
+          }}
+        >
           {!open ? (
-            <Button variant="secondary">Preview</Button>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                dispatch(
+                  updateForm({
+                    id: String(formid),
+                    title: title,
+                  })
+                );
+              }}
+            >
+              Preview
+            </Button>
           ) : (
             <Button variant="outlined">Back to editor</Button>
           )}
@@ -69,7 +90,11 @@ export default function EditPage({ formid }: { formid?: string }) {
             type="text"
           />
           <div className=" -translate-x-18 w-full">
-            {open ? <EditorPreview /> : <Editor />}
+            {open ? (
+              <EditorPreview formid={formid} />
+            ) : (
+              <Editor formid={formid} />
+            )}
           </div>
         </div>
       </div>

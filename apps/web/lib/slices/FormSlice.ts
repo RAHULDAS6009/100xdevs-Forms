@@ -1,38 +1,26 @@
-import { PartialBlock } from "@blocknote/core";
-import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
+// lib/slices/FormSlice.ts
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Form } from "../../types";
 
-export interface Form {
-  id: string;
-  title: string;
-  coverPage?: string;
-  logo?: string;
-  blocks?: string;
-  isPublished: boolean;
-}
+const initialState: Form[] = [];
 
-const intialState: Form[] = [];
-
-export const FormSlice: Slice = createSlice({
+const formSlice = createSlice({
   name: "form",
-  initialState: intialState,
+  initialState,
   reducers: {
-    addForm: (state, action: PayloadAction<Form[]>) => {
-      state = action.payload;
-      //create a api request.
+    setForms: (state, action: PayloadAction<Form[]>) => {
+      return action.payload;
     },
-    editForm: (state, action: PayloadAction<Form>) => {
-      //for adding blocks and update title ,cover page etc;
-
-      const form: Form = state.find(
-        (form: Form) => form.id == action.payload.id
-      );
-      if (form) {
-        form.blocks = action.payload.blocks;
-        form.title = action.payload.title;
-        form.coverPage = action.payload.coverPage;
-      }
+    updateForm: (
+      state,
+      action: PayloadAction<Partial<Form> & { id: string }>
+    ) => {
+      const form = state.find((form) => form.id === action.payload.id);
+      if (form) Object.assign(form, action.payload);
     },
   },
 });
-export const { addForm, editForm } = FormSlice.actions;
-export default FormSlice.reducer;
+
+// ✅ Clean and consistent export
+export const { setForms, updateForm } = formSlice.actions;
+export default formSlice.reducer;

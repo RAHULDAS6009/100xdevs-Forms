@@ -2,9 +2,12 @@ import axios from "axios";
 import { BACKEND_URL } from "../_components/pages/EditPage";
 import { useEffect, useState } from "react";
 import { Form } from "../../types";
+import { useAppDispatch } from "../../lib/hooks";
+import { setForms } from "../../lib/slices/FormSlice";
 
 export function useForms() {
-  const [forms, setForms] = useState<Form[]>();
+  const [allforms, setAllForms] = useState<Form[] | undefined>([]);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     async function getForms() {
@@ -14,9 +17,11 @@ export function useForms() {
         },
       });
       console.log(response);
-      setForms(response.data.forms);
+      setAllForms(response.data.forms);
+      dispatch(setForms(allforms as Form[]));
     }
     getForms();
   }, []);
-  return forms;
+
+  return allforms;
 }

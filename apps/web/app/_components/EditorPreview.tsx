@@ -3,11 +3,12 @@ import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/mantine/style.css";
 import "../globals.css";
-import { Block, PartialBlock } from "@blocknote/core";
 import { schema } from "./EditorComponents/schema";
-export default function EditorPreview() {
-  const blocks = localStorage.getItem("blocks");
-  if (!blocks) return;
+import { useAppDispatch, useAppSelector } from "../../lib/hooks";
+export default function EditorPreview({ formid }: { formid: string }) {
+  const state = useAppSelector((state) => state.form);
+  const blocks = state.find((form) => form.id == formid)?.blocks;
+  if (!blocks) return <div>No blocks</div>;
   const editor = useCreateBlockNote({
     schema: schema,
     initialContent: JSON.parse(blocks),

@@ -32,19 +32,31 @@ import {
   insertSelect,
 } from "./EditorComponents/InsetBlock";
 import { RemoveBlockButton } from "./EditorComponents/sidemenu/RemoveBlockButton";
+import { useAppDispatch, useAppSelector } from "../../lib/hooks";
+import { updateForm } from "../../lib/slices/FormSlice";
 
-export default function Editor() {
-  const [blocks, setBlocks] = useState<PartialBlock[]>([{ type: "paragraph" }]);
+export default function Editor({ formid }: { formid: string }) {
+  const [blocks, setBlocks] = useState<string>();
+  const dispatch = useAppDispatch();
+  const state = useAppSelector((state) => state.form);
+
+  const intialblocks = state.find((form) => form.id == formid)?.blocks;
 
   const editor = useCreateBlockNote({
     schema: schema,
-    initialContent: [...blocks, { type: "submit" }],
+    initialContent: JSON.parse(intialblocks as string) || [],
   });
 
   function onChange() {
-    setBlocks(editor.document as PartialBlock[]);
-    localStorage.setItem("blocks", JSON.stringify(blocks, null, 2));
-    // dispatch(addBlock(editor.document as PartialBlock[]));
+    setBlocks(JSON.stringify(editor.document));
+
+    // localStorage.setItem("blocks", JSON.stringify(blocks, null, 2));
+    dispatch(
+      updateForm({
+        id: formid,
+        blocks: blocks,
+      })
+    );
   }
 
   function handleKeyDown(e: KeyboardEvent) {
