@@ -77,34 +77,55 @@ app.post("/form", middleware, async (req: Request, res: Response) => {
 });
 
 //Publish the id
-app.post(
-  "/form/publish/:id",
-  middleware,
-  async (req: Request, res: Response) => {
-    try {
-      const formId = req.params.id;
+app.put("/form/:id", middleware, async (req: Request, res: Response) => {
+  try {
+    const formId = req.params.id;
 
-      await client.form.update({
-        data: {
-          title: req.body.title || "Untitled",
-          blocks: req.body.blocks,
-          cover: req.body.cover,
-          logo: req.body.logo,
-          isPublished: req.body.isPublished,
-          userId: req.userId,
-        },
-        where: {
-          id: formId,
-        },
-      });
+    await client.form.update({
+      data: {
+        title: req.body.title || "Untitled",
+        blocks: req.body.blocks,
+        cover: req.body.cover,
+        logo: req.body.logo,
+        isPublished: req.body.isPublished,
+        userId: req.userId,
+      },
+      where: {
+        id: formId,
+      },
+    });
 
-      res.json({ msg: "form updated" });
-    } catch (error) {
-      console.log(error);
-      res.json({ msg: "Somthing went wrong" });
-    }
+    res.json({ msg: "form updated" });
+  } catch (error) {
+    console.log(error);
+    res.json({ msg: "Somthing went wrong" });
   }
-);
+});
+
+// app.put("/form/:id", middleware, async (req: Request, res: Response) => {
+//   try {
+//     const formId = req.params.id;
+
+//     await client.form.update({
+//       data: {
+//         title: req.body.title || "Untitled",
+//         blocks: req.body.blocks,
+//         cover: req.body.cover,
+//         logo: req.body.logo,
+//         isPublished: req.body.isPublished,
+//         userId: req.userId,
+//       },
+//       where: {
+//         id: formId,
+//       },
+//     });
+
+//     res.json({ msg: "form updated" });
+//   } catch (error) {
+//     console.log(error);
+//     res.json({ msg: "Somthing went wrong" });
+//   }
+// });
 
 //update/edit a form authentication required
 app.put("/form/:id", middleware, (req: Request, res: Response) => {});

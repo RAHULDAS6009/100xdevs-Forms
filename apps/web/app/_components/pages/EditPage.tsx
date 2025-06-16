@@ -4,8 +4,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import EditorPreview from "../EditorPreview";
 import { Editor } from "../DynamicEditor";
 import Button from "@repo/ui/button";
-import { useAppDispatch } from "../../../lib/hooks";
+import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import { setForms, updateForm } from "../../../lib/slices/FormSlice";
+import axios from "axios";
+import { redirect } from "next/navigation";
 export const BACKEND_URL = "http://localhost:5000";
 
 export default function EditPage({ formid }: { formid?: string }) {
@@ -13,6 +15,8 @@ export default function EditPage({ formid }: { formid?: string }) {
   const [open, setOpen] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const dispatch = useAppDispatch();
+  const state = useAppSelector((state) => state.form);
+  const findForm = state.find((form) => formid == form.id);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const handleKeyDown = (e: KeyboardEvent) => {};
@@ -64,7 +68,30 @@ export default function EditPage({ formid }: { formid?: string }) {
         </div>
         {!open && (
           <div className="cursor-pointer">
-            <Button variant="primary">Publish</Button>
+            <Button
+              variant="primary"
+              onClick={async () => {
+                console.log(title, "asasas");
+                alert("asas");
+                const res = await axios.put(
+                  `${BACKEND_URL}/form/${formid}`,
+                  {
+                    title: title,
+                    blocks: JSON.stringify(findForm?.blocks),
+                    isPublished: true,
+                  },
+                  {
+                    headers: {
+                      Authorization: localStorage.getItem("token"),
+                    },
+                  }
+                );
+                console.log(res);
+                redirect(`/r/${formid}`);
+              }}
+            >
+              Publish
+            </Button>
           </div>
         )}
       </div>
@@ -84,6 +111,7 @@ export default function EditPage({ formid }: { formid?: string }) {
             value={title}
             onChange={(e) => {
               setTitle(e.target.value);
+              console.log(title);
             }}
             className="outline-none text-[50px] font-bold "
             placeholder="Title"
