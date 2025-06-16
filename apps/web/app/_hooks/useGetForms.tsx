@@ -18,7 +18,8 @@ export function useForms() {
       });
       console.log(response);
       setAllForms(response.data.forms);
-      dispatch(setForms(allforms as Form[]));
+
+      dispatch(setForms(response.data.forms as Form[]));
     }
     getForms();
   }, []);

@@ -11,7 +11,7 @@ export default function EditorPreview({ formid }: { formid: string }) {
   if (!blocks) return <div>No blocks</div>;
   const editor = useCreateBlockNote({
     schema: schema,
-    initialContent: JSON.parse(blocks),
+    initialContent: [...JSON.parse(blocks), { type: "submit" }],
   });
   console.log(editor.document);
   return <BlockNoteView editable={false} editor={editor} theme={"light"} />;

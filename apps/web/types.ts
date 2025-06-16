@@ -3,6 +3,6 @@ export interface Form {
   title: string;
   cover?: string;
   logo?: string;
-  blocks?: string;
+  blocks: string;
   isPublished: boolean;
 }

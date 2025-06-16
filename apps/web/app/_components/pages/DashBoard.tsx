@@ -5,23 +5,24 @@ import { BACKEND_URL } from "./EditPage";
 import { redirect } from "next/navigation";
 import { useForms } from "../../_hooks/useGetForms";
 import { Form } from "../../../types";
-import { Input } from "@repo/ui/input";
-import { useState } from "react";
+import { useAppDispatch } from "../../../lib/hooks";
+import { addForm, setForms } from "../../../lib/slices/FormSlice";
 
 export default function DashBoard() {
   const forms = useForms() || [];
+  const dispatch = useAppDispatch();
 
   // const [form, setForm] = useState();
 
   return (
     <div className="w-full max-w-4xl mx-auto ">
       <div className="flex">
-        <Input
+        {/* <Input
           variant="primary"
           // onChange={() => {
           //   setForm(e.target.value);
           // }}
-        />
+        /> */}
         <Button
           variant="primary"
           onClick={async () => {
@@ -37,7 +38,9 @@ export default function DashBoard() {
               }
             );
             console.log(res);
-            redirect(`/forms/${res.data.id}/edit`);
+            dispatch(addForm(res.data.form));
+            // alert(res.data.msg);
+            redirect(`/forms/${res.data.form.id}/edit`);
           }}
           className="flex gap-2"
         >

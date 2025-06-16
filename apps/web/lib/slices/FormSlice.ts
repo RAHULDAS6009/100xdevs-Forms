@@ -9,7 +9,13 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     setForms: (state, action: PayloadAction<Form[]>) => {
+      // console.log(action.payload);
+      // state = action.payload;
+      // console.log(state);
       return action.payload;
+    },
+    addForm: (state, action: PayloadAction<Form>) => {
+      state.push(action.payload);
     },
     updateForm: (
       state,
@@ -22,5 +28,5 @@ const formSlice = createSlice({
 });
 
 // ✅ Clean and consistent export
-export const { setForms, updateForm } = formSlice.actions;
+export const { setForms, updateForm, addForm } = formSlice.actions;
 export default formSlice.reducer;

@@ -24,6 +24,7 @@ app.post("/signup", async (req: Request, res: Response) => {
       userId: user.id,
     });
   } catch (error) {
+    console.log(error);
     res.json({ msg: "something went wrong" });
   }
 });
@@ -63,11 +64,12 @@ app.post("/form", middleware, async (req: Request, res: Response) => {
     const form = await client.form.create({
       data: {
         title: req.body.title || "Untitled",
+        blocks: req.body.blocks || `[{"type":"paragraph"}]`,
         userId: req.userId,
       },
     });
 
-    res.json({ msg: "form created", id: form.id });
+    res.json({ msg: "form created", form });
   } catch (error) {
     console.log(error);
     res.json({ msg: "Somthing went wrong" });
@@ -113,11 +115,6 @@ app.get("/forms", middleware, async (req: Request, res: Response) => {
     const forms = await client.form.findMany({
       where: {
         userId: req.userId,
-      },
-      select: {
-        title: true,
-        isPublished: true,
-        id: true,
       },
     });
 

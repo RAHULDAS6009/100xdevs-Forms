@@ -34,27 +34,28 @@ import {
 import { RemoveBlockButton } from "./EditorComponents/sidemenu/RemoveBlockButton";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { updateForm } from "../../lib/slices/FormSlice";
+import { useSelector } from "react-redux";
 
 export default function Editor({ formid }: { formid: string }) {
-  const [blocks, setBlocks] = useState<string>();
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.form);
 
-  const intialblocks = state.find((form) => form.id == formid)?.blocks;
+  const intialblocks = JSON.parse(
+    state.find((form) => formid === form.id)?.blocks as string
+  );
 
   const editor = useCreateBlockNote({
     schema: schema,
-    initialContent: JSON.parse(intialblocks as string) || [],
+    initialContent: [...intialblocks, { type: "submit" }],
   });
 
   function onChange() {
-    setBlocks(JSON.stringify(editor.document));
-
-    // localStorage.setItem("blocks", JSON.stringify(blocks, null, 2));
     dispatch(
       updateForm({
         id: formid,
-        blocks: blocks,
+        blocks: JSON.stringify(
+          editor.document.filter((form) => form.type !== "submit")
+        ),
       })
     );
   }
