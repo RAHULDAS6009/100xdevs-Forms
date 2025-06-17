@@ -42,6 +42,10 @@ export default function Page() {
         initialContent: [...parsedBlocks, { type: "submit" }],
       });
       setEditor(editorInstance);
+      sessionStorage.setItem(
+        "form",
+        JSON.stringify({ id: params.formid, submission: [] })
+      );
     } catch (err) {
       console.error("Failed to parse blocks or create editor:", err);
     }

@@ -1,19 +1,14 @@
-"use client ";
-import {
-  Block,
-  defaultProps,
-  insertBlocks,
-  insertOrUpdateBlock,
-  PartialBlock,
-} from "@blocknote/core";
+"use client";
+
+import { defaultProps } from "@blocknote/core";
 import { createReactBlockSpec } from "@blocknote/react";
+
 export const SelectBlock = createReactBlockSpec(
   {
     type: "select",
     propSchema: {
       textAlignment: defaultProps.textAlignment,
       textColor: defaultProps.textColor,
-
       type: {
         default: "",
       },
@@ -22,53 +17,83 @@ export const SelectBlock = createReactBlockSpec(
   },
   {
     render: (props) => {
+      const blockId = props.block.id;
+      const isEditable = props.editor.isEditable;
       const filteredSelectBlocks = props.editor.document.filter(
-        (block) => block.type == "select"
+        (block) => block.type === "select"
       );
 
-      const firstSelectedBlock = filteredSelectBlocks[0]?.id === props.block.id;
+      const isFirstSelect = filteredSelectBlocks[0]?.id === blockId;
+
+      const getOptionText = (block: any) =>
+        block.content
+          .map((inline: any) => ("text" in inline ? inline.text : ""))
+          .join("");
+
+      const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedValue = e.target.value;
+
+        const form = JSON.parse(sessionStorage.getItem("form") || "{}");
+        const updatedSubmission = [
+          ...(form.submission || []).filter(
+            (entry: any) => entry.id !== blockId
+          ),
+          { id: blockId, value: selectedValue },
+        ];
+
+        sessionStorage.setItem(
+          "form",
+          JSON.stringify({ ...form, submission: updatedSubmission })
+        );
+      };
+
       return (
-        // user type option
         <div className="relative w-full">
-          {props.editor.isEditable ? (
+          {isEditable ? (
             <>
-              {props.block.content.length == 0 && (
-                <span className="absolute left-1 text-sm   text-gray-400 pointer-events-none  select-none">
-                  Type option....
+              {props.block.content.length === 0 && (
+                <span className="absolute left-1 text-sm text-gray-400 pointer-events-none select-none">
+                  Type option...
                 </span>
               )}
               <div
-                className=" w-full px-1    text-sm text-gray-800 outline-none"
                 ref={props.contentRef}
+                className="w-full px-1 text-sm text-gray-800 outline-none"
               />
-              <div
-                className="text-green-500  cursor-pointer hover:bg-amber-400"
+              <button
+                type="button"
+                className="text-green-500 mt-1 text-sm hover:bg-yellow-200 px-2 py-1 rounded"
                 onClick={() =>
                   props.editor.insertBlocks(
                     [{ type: "select", content: "" }],
-                    props.block.id,
+                    blockId,
                     "after"
                   )
                 }
               >
-                {" "}
-                Add option
-              </div>
+                + Add option
+              </button>
             </>
           ) : (
-            <>
-              {firstSelectedBlock && (
-                <select>
-                  {filteredSelectBlocks.map((block, index) => (
-                    <option key={index}>
-                      {block.content
-                        .map((inline) => ("text" in inline ? inline.text : ""))
-                        .join("")}
+            isFirstSelect && (
+              <select
+                onChange={handleChange}
+                className="border border-gray-300 rounded px-2 py-1 text-sm w-full"
+                defaultValue=""
+              >
+                <option value="" disabled hidden>
+                  -- Select an option --
+                </option>
+                {filteredSelectBlocks.map((block) => {
+                  const text = getOptionText(block);
+                  return (
+                    <option key={block.id} value={text}>
+                      {text}
                     </option>
-                  ))}
-                </select>
-              )}
-            </>
+                  );
+                })}
+              </select>
+            )
           )}
         </div>
       );

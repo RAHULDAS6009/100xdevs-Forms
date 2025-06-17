@@ -1,5 +1,6 @@
 import { defaultProps } from "@blocknote/core";
 import { createReactBlockSpec } from "@blocknote/react";
+import { useState } from "react";
 
 export const InputBlock = createReactBlockSpec(
   {
@@ -10,6 +11,9 @@ export const InputBlock = createReactBlockSpec(
       type: {
         default: "text",
       },
+      value: {
+        default: "",
+      },
     },
     content: "inline",
   },
@@ -17,10 +21,37 @@ export const InputBlock = createReactBlockSpec(
     render: (props) => {
       const isEmpty = props.block.content.length === 0;
 
+      const [itemVal, setitemVal] = useState<string>("");
+
       // Safely extract plain text from block content
       const blockText = props.block.content
         .map((inline) => ("text" in inline ? inline.text : ""))
         .join("");
+
+      const updateValue = (newVal: string) => {
+        props.editor.updateBlock(props.block, {
+          props: {
+            ...props.block.props,
+            value: newVal,
+          },
+        });
+
+        const form = JSON.parse(sessionStorage.getItem("form") || "{}");
+        const blockId = props.block.id;
+        const updatedSubmission = [
+          ...(form.submission || []).filter(
+            (entry: any) => entry.id !== blockId
+          ),
+          { id: blockId, value: newVal },
+        ];
+        sessionStorage.setItem(
+          "form",
+          JSON.stringify({
+            ...form,
+            submission: updatedSubmission,
+          })
+        );
+      };
 
       return (
         <>
@@ -38,6 +69,8 @@ export const InputBlock = createReactBlockSpec(
             </div>
           ) : (
             <input
+              value={props.block.props.value}
+              onChange={(e) => updateValue(e.target.value)}
               placeholder={blockText}
               type="text"
               className="w-full px-3 text-sm text-gray-800 border border-gray-300 rounded"

@@ -168,7 +168,22 @@ app.get("/form/:id", async (req: Request, res: Response) => {
 });
 
 //create submission /public url
-app.get("/form/:id/submission", (req: Request, res: Response) => {});
+app.put("/form/:id/submission", async (req: Request, res: Response) => {
+  console.log("hello from submission endpoint");
+  console.log(req.body);
+  try {
+    const { submissions } = req.body;
+    await client.form.update({
+      where: {
+        id: req.params.id,
+      },
+      data: { submissions },
+    });
+    res.json({ msg: "submission done" });
+  } catch (error) {
+    res.json({ msg: "something went wrong" });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server is running at ${port}`);

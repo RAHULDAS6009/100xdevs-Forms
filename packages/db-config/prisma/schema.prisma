@@ -22,12 +22,13 @@ model User {
 }
 
 model Form {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   title       String
   cover       String?
   logo        String?
   blocks      String
-  isPublished Boolean @default(false)
-  User        User    @relation(fields: [userId], references: [id])
+  submissions String[] @default([])
+  isPublished Boolean  @default(false)
+  User        User     @relation(fields: [userId], references: [id])
   userId      String
 }

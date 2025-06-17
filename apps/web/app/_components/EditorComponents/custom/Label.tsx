@@ -10,6 +10,9 @@ export const LabelBlock = createReactBlockSpec(
       text: {
         default: "",
       },
+      value: {
+        default: "",
+      },
     },
     content: "inline",
   },
