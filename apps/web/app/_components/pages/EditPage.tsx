@@ -7,11 +7,14 @@ import Button from "@repo/ui/button";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import { setForms, updateForm } from "../../../lib/slices/FormSlice";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
+import { FaCircleArrowLeft } from "react-icons/fa6";
+// import { useRouter } from "next/router";
 export const BACKEND_URL = "http://localhost:5000";
 
 export default function EditPage({ formid }: { formid?: string }) {
-  if (!formid) return <div>NO form exsist</div>;
+  const router = usePathname();
+  if (!formid) return <div>No blocks</div>;
   const [open, setOpen] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const dispatch = useAppDispatch();
@@ -22,6 +25,7 @@ export default function EditPage({ formid }: { formid?: string }) {
   const handleKeyDown = (e: KeyboardEvent) => {};
 
   useEffect(() => {
+    console.log(router);
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -69,7 +73,10 @@ export default function EditPage({ formid }: { formid?: string }) {
         {!open && (
           <div className="cursor-pointer">
             <Button
+              // disabled={window.location.pathname.endsWith("/create")}
+              disabled={router.endsWith("/create")}
               variant="primary"
+              className={`${router.endsWith("/create") ? "cursor-not-allowed" : ""}`}
               onClick={async () => {
                 console.log(title, "asasas");
                 alert("asas");
@@ -95,6 +102,16 @@ export default function EditPage({ formid }: { formid?: string }) {
           </div>
         )}
       </div>
+      {/* <Button
+        onClick={() => {
+          redirect("/");
+        }}
+        variant="secondary"
+        className="fixed top-10 left-10 hover:bg-neutral-300"
+      >
+        <FaCircleArrowLeft size={40} />
+      </Button> */}
+
       <div className="w-full h-[30%] bg-amber-100 "></div>
       <div className="mx-auto max-w-2xl   h-[70%] ">
         <div className="-translate-y-15 flex flex-col items-start ">

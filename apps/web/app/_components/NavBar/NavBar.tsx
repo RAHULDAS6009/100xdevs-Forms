@@ -10,10 +10,20 @@ export default function NavBar() {
       <Logo />
 
       <div className="flex gap-4">
-        {["Pricing", "Login", "Sign up"].map((item, index) => {
+        {[
+          { title: "Pricing", route: "/" },
+          { title: "Login", route: "/signin" },
+          { title: "Sign up", route: "/signup" },
+        ].map((item, index) => {
           return (
-            <Button variant="secondary" key={index}>
-              {item}
+            <Button
+              variant="secondary"
+              onClick={() => {
+                redirect(`${item.route}`);
+              }}
+              key={index}
+            >
+              {item.title}
             </Button>
           );
         })}

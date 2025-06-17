@@ -1,9 +1,9 @@
 "use client";
-import { ReactNode } from "react";
+import { ChangeEvent, ChangeEventHandler, ReactNode } from "react";
 
 interface InputProps {
   //cahnge the optional tag in onChange
-  onChange?: () => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   placeholder?: string;
   value?: string;
   type?: "text" | "password";

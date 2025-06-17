@@ -34,7 +34,6 @@ import {
 import { RemoveBlockButton } from "./EditorComponents/sidemenu/RemoveBlockButton";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { updateForm } from "../../lib/slices/FormSlice";
-import { useSelector } from "react-redux";
 
 export default function Editor({ formid }: { formid: string }) {
   const dispatch = useAppDispatch();

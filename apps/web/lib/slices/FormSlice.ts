@@ -2,7 +2,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Form } from "../../types";
 
-const initialState: Form[] = [];
+const initialState: Form[] = [
+  {
+    id: "new",
+    title: "Untitled",
+    blocks: JSON.stringify([{ type: "paragraph" }]),
+    isPublished: false,
+  },
+];
 
 const formSlice = createSlice({
   name: "form",

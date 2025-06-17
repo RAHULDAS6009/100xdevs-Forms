@@ -5,12 +5,14 @@ interface ButtonProps {
   variant: "primary" | "secondary" | "outlined";
   className?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 export default function Button({
   children,
   variant,
   className,
+  disabled,
   onClick,
 }: ButtonProps) {
   let variants = {
@@ -20,14 +22,15 @@ export default function Button({
   };
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
-      className={`${className} ${variants[variant]}
+      className={`cursor-pointer ${className} ${variants[variant]}
       transition-colors 
 
       ease-in-out duration-400
      ring-0 
       focus:ring-2 focus:ring-blue-400/80
-      cursor-pointer   rounded-md px-6 py-1.5  font-medium text-sm`}
+         rounded-md px-6 py-1.5  font-medium text-sm`}
     >
       {children}
     </button>
