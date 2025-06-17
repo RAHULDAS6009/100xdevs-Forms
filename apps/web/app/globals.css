@@ -120,3 +120,21 @@
     fadeIn 500ms 100ms forwards,
     rotate 1s linear infinite;
 }
+
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateY(10);
+      opacity: 0;
+      color: oklch(40% 0 0);
+    }
+    100% {
+      transform:translateY(0);
+      opacity: 20;
+      color: oklch(30% 0 0);
+
+    }
+  }
+
+  .labelAnimate{
+    animation: 1s ease-out 0s 1 slideInFromLeft;
+  }

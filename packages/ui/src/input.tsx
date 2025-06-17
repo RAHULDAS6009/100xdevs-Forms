@@ -8,34 +8,46 @@ interface InputProps {
   value?: string;
   type?: "text" | "password";
   className?: string;
-  variant: "primary" | "secondary";
+  position: "left" | "right";
   icon?: ReactNode;
 }
-
-const variants = {
-  primary: "",
-  secondary: "",
-};
 
 export function Input({
   onChange,
   placeholder,
-  variant,
   value,
+  position,
   type = "text",
   className,
   icon,
 }: InputProps) {
   return (
-    <div className="relative bg-red-50">
-      <input
-        className={`${className} w-full h-full`}
-        onChange={onChange}
-        placeholder={placeholder}
-        value={value}
-        type={type}
-      />
-      <span className="absolute">{icon}</span>
-    </div>
+    <>
+      <div className="relative ">
+        <input
+          className={`${className} w-full h-full  rounded-md border border-neutral-200
+        
+        
+        placeholder-neutral-300
+        
+         py-2.5 text-neutral-500 font-medium outline-none flex items-center
+        
+        focus:ring-2
+        ${position == "left" ? "px-8" : "px-4"}
+        
+        
+        focus:ring-blue-500/50
+        
+        `}
+          onChange={onChange}
+          placeholder={placeholder}
+          value={value}
+          type={type}
+        />
+        <div className={`absolute ${position}-2 top-[12.5px] text-neutral-400`}>
+          {icon}
+        </div>
+      </div>
+    </>
   );
 }
