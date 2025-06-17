@@ -1,24 +1,32 @@
 "use client";
-import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Form } from "../../../types";
 import axios from "axios";
 import { BACKEND_URL } from "./EditPage";
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
 import { schema } from "../EditorComponents/schema";
-import { useAppSelector } from "../../../lib/hooks";
 
 export default function PublishPage({ formid }: { formid: string }) {
-  const state = useAppSelector((state) => state.form);
-  const form = state.find((form) => form.id == formid);
-  console.log(form);
+  const [form, setForm] = useState<Form>();
+
+  useEffect(() => {
+    console.log("hello");
+    async function callAPI() {
+      const res = await axios.get(`${BACKEND_URL}/form/${formid}`);
+      console.log(res);
+      setForm(res.data.form);
+    }
+    callAPI();
+  }, [formid]);
 
   const editor = useCreateBlockNote({
     schema: schema,
     initialContent: [...JSON.parse(form?.blocks as string), { type: "submit" }],
   });
+
+  if (!form) return <div>Loading.....</div>;
 
   return (
     <div className="relative h-full w-full scale-100 opacity-90">
@@ -36,7 +44,11 @@ export default function PublishPage({ formid }: { formid: string }) {
             {form?.title}
           </div>
           <div className=" -translate-x-18 w-full">
-            <BlockNoteView editable={false} editor={editor} theme={"light"} />;
+            {form.blocks ? (
+              <BlockNoteView editable={false} editor={editor} theme={"light"} />
+            ) : (
+              <div>Loading</div>
+            )}
           </div>
         </div>
       </div>

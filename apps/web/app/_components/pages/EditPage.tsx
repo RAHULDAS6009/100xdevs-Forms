@@ -84,7 +84,7 @@ export default function EditPage({ formid }: { formid?: string }) {
                   `${BACKEND_URL}/form/${formid}`,
                   {
                     title: title,
-                    blocks: JSON.stringify(findForm?.blocks),
+                    blocks: findForm?.blocks,
                     isPublished: true,
                   },
                   {

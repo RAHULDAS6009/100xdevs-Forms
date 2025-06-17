@@ -76,7 +76,7 @@ app.post("/form", middleware, async (req: Request, res: Response) => {
   }
 });
 
-//Publish the id
+//update the form
 app.put("/form/:id", middleware, async (req: Request, res: Response) => {
   try {
     const formId = req.params.id;

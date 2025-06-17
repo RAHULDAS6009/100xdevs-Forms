@@ -1,6 +1,5 @@
 import { defaultProps } from "@blocknote/core";
 import { createReactBlockSpec } from "@blocknote/react";
-import { useEffect } from "react";
 
 export const InputBlock = createReactBlockSpec(
   {
