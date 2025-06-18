@@ -169,17 +169,46 @@ app.get("/form/:id", async (req: Request, res: Response) => {
 
 //create submission /public url
 app.put("/form/:id/submission", async (req: Request, res: Response) => {
-  console.log("hello from submission endpoint");
-  console.log(req.body);
   try {
-    const { submissions } = req.body;
+    const form = await client.form.findFirst({
+      where: { id: req.params.id },
+      select: { submissions: true },
+    });
+
+    if (!form) {
+      res.status(404).json({ msg: "Form not found" });
+    }
+
+    const existingSubmissions = form?.submissions || "";
+    const newSubmission = req.body.submissions || "";
+
+    const updatedSubmissions = existingSubmissions
+      ? `${existingSubmissions}\n${newSubmission}`
+      : newSubmission;
+
     await client.form.update({
+      where: { id: req.params.id },
+      data: { submissions: updatedSubmissions },
+    });
+
+    res.json({ msg: "Submission done" });
+  } catch (error) {
+    console.error("Submission error:", error);
+    res.status(500).json({ msg: "Something went wrong" });
+  }
+});
+
+app.get("/form/:id/submission", async (req: Request, res: Response) => {
+  try {
+    const allSubmission = await client.form.findFirst({
       where: {
         id: req.params.id,
       },
-      data: { submissions },
+      select: {
+        submissions: true,
+      },
     });
-    res.json({ msg: "submission done" });
+    res.json({ msg: "All submissions", submissions: allSubmission });
   } catch (error) {
     res.json({ msg: "something went wrong" });
   }
