@@ -36,13 +36,26 @@ export const InputBlock = createReactBlockSpec(
           },
         });
 
+        const prevBlock = props.editor.getPrevBlock(props.block.id);
+        // const nextBlock = props.editor.getNextBlock(props.block.id);
+        const prevBlockLabel = prevBlock?.content
+          .map((inline) => ("text" in inline ? inline.text : ""))
+          .join("");
+        // console.log(
+        //   nextBlock?.content
+        //     .map((inline) => ("text" in inline ? inline.text : ""))
+        //     .join("")
+        // );
+        const prevBlockName =
+          prevBlock?.type === undefined ? blockText : prevBlockLabel;
+
         const form = JSON.parse(sessionStorage.getItem("form") || "{}");
         const blockId = props.block.id;
         const updatedSubmission = [
           ...(form.submission || []).filter(
             (entry: any) => entry.id !== blockId
           ),
-          { id: blockId, value: newVal },
+          { id: blockId, value: newVal, name: prevBlockName },
         ];
         sessionStorage.setItem(
           "form",

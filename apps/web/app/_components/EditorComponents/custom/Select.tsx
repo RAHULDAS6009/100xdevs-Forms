@@ -34,11 +34,24 @@ export const SelectBlock = createReactBlockSpec(
         const selectedValue = e.target.value;
 
         const form = JSON.parse(sessionStorage.getItem("form") || "{}");
+
+        const prevBlock = props.editor.getPrevBlock(props.block.id);
+        const prevBlockType = prevBlock?.type;
+        // console.log(prevBlock);
+        const name =
+          prevBlock && prevBlock.type === prevBlockType
+            ? prevBlock.content
+                .map((inline: any) => ("text" in inline ? inline.text : ""))
+                .join("")
+            : "untitled option";
+
+        console.log(name);
+
         const updatedSubmission = [
           ...(form.submission || []).filter(
             (entry: any) => entry.id !== blockId
           ),
-          { id: blockId, value: selectedValue },
+          { id: blockId, value: selectedValue, name: name },
         ];
 
         sessionStorage.setItem(

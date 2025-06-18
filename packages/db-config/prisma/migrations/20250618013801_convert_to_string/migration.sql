@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Form" ALTER COLUMN "submissions" DROP NOT NULL,
+ALTER COLUMN "submissions" DROP DEFAULT,
+ALTER COLUMN "submissions" SET DATA TYPE TEXT;
