@@ -1,6 +1,8 @@
-"use client ";
+"use client";
 import { defaultProps } from "@blocknote/core";
 import { createReactBlockSpec } from "@blocknote/react";
+import { useEffect } from "react";
+
 export const LabelBlock = createReactBlockSpec(
   {
     type: "label",
@@ -18,15 +20,22 @@ export const LabelBlock = createReactBlockSpec(
   },
   {
     render: (props) => {
+      const isEmpty =
+        props.block.content.length === 0 ||
+        //@ts-ignore
+        props.block.content.every((item) => item.text.trim() === "");
+
+      useEffect(() => {}, [props.editor.isEditable]);
+
       return (
         <div className="relative w-full">
-          {props.block.content.length == 0 && (
-            <span className="absolute left-1 text-sm   text-gray-400 pointer-events-none  select-none">
-              Label text...
+          {isEmpty && (
+            <span className="absolute font-semibold text-lg left-1 text-neutral-400 pointer-events-none select-none">
+              Type a question
             </span>
           )}
           <div
-            className=" w-full px-1   text-sm text-gray-800 outline-none"
+            className="w-full px-1 font-semibold left-1 text-lg text-neutral-600 outline-none"
             ref={props.contentRef}
           />
         </div>

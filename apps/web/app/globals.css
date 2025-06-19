@@ -138,3 +138,10 @@
   .labelAnimate{
     animation: 1s ease-out 0s 1 slideInFromLeft;
   }
+
+  .hello-world-block {
+  padding: 4px;
+  margin: 2px;
+   display: flex;
+  justify-content: center;
+}

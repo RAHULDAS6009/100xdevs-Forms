@@ -31,9 +31,11 @@ import {
   insertLabel,
   insertSelect,
 } from "./EditorComponents/InsetBlock";
-import { RemoveBlockButton } from "./EditorComponents/sidemenu/RemoveBlockButton";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { updateForm } from "../../lib/slices/FormSlice";
+import { MdDelete, MdSettings } from "react-icons/md";
+
+type CustomEditor = typeof schema.blockSchema;
 
 export default function Editor({ formid }: { formid: string }) {
   const dispatch = useAppDispatch();
@@ -44,6 +46,12 @@ export default function Editor({ formid }: { formid: string }) {
   );
 
   const editor = useCreateBlockNote({
+    domAttributes: {
+      // Adds a class to all `blockContainer` elements.
+      block: {
+        class: "hello-world-block",
+      },
+    },
     schema: schema,
     initialContent: [...intialblocks, { type: "submit" }],
   });
@@ -92,15 +100,31 @@ export default function Editor({ formid }: { formid: string }) {
       />
 
       <SideMenuController
-        sideMenu={(props) => (
+        sideMenu={(props: SideMenuProps<CustomEditor>) => (
           <>
-            <SideMenu {...props}>
-              <div className="flex items-center bg-white gap-2  justify-center ">
-                <AddBlockButton {...props} />
-                <RemoveBlockButton {...props} />
-                <DragHandleButton {...props} />
+            {props.block.type == "submit" ? (
+              // <SideMenu {...props}>
+              <div className=" bg-white gap-2   justify-center ">
+                <MdSettings size={40} className="  text-neutral-300 " />
               </div>
-            </SideMenu>
+            ) : (
+              // </SideMenu>
+              <SideMenu {...props}>
+                <div className="flex items-center bg-white gap-2   justify-center ">
+                  <AddBlockButton {...props} />
+
+                  <MdDelete
+                    size={25}
+                    className="bg-white  cursor-pointer"
+                    onClick={() => {
+                      editor.removeBlocks([props.block.id]);
+                    }}
+                  />
+                  {/* <RemoveBlockButton {...props} /> */}
+                  <DragHandleButton {...props} />
+                </div>
+              </SideMenu>
+            )}
           </>
         )}
       />

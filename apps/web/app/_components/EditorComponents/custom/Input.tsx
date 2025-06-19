@@ -1,5 +1,6 @@
 import { defaultProps } from "@blocknote/core";
 import { createReactBlockSpec } from "@blocknote/react";
+import { Input } from "@repo/ui/input";
 import { useState } from "react";
 
 export const InputBlock = createReactBlockSpec(
@@ -11,6 +12,7 @@ export const InputBlock = createReactBlockSpec(
       type: {
         default: "text",
       },
+      placeholder: { default: "" },
       value: {
         default: "",
       },
@@ -20,8 +22,6 @@ export const InputBlock = createReactBlockSpec(
   {
     render: (props) => {
       const isEmpty = props.block.content.length === 0;
-
-      const [itemVal, setitemVal] = useState<string>("");
 
       // Safely extract plain text from block content
       const blockText = props.block.content
@@ -69,24 +69,30 @@ export const InputBlock = createReactBlockSpec(
       return (
         <>
           {props.editor.isEditable ? (
-            <div className="w-full relative">
+            <div
+              className="w-72 h-full  rounded-md border border-neutral-200
+        placeholder-neutral-300        
+         py-2.5 text-neutral-500 font-medium outline-none flex items-center "
+            >
               {isEmpty && (
-                <span className="absolute left-3 text-sm text-gray-400 pointer-events-none select-none">
-                  Label text...
+                <span className="absolute pl-3   text-neutral-400 pointer-events-none select-none">
+                  Type Placeholder text
                 </span>
               )}
               <div
-                className="w-full px-3 text-sm text-gray-800 outline-none"
+                className=" px-3  text-neutral-400 outline-none"
                 ref={props.contentRef}
               />
             </div>
           ) : (
-            <input
+            <Input
+              position="right"
               value={props.block.props.value}
               onChange={(e) => updateValue(e.target.value)}
               placeholder={blockText}
               type="text"
-              className="w-full px-3 text-sm text-gray-800 border border-gray-300 rounded"
+              className="w-72"
+              // className="w-full px-3 text-sm text-gray-800 border border-gray-300 rounded"
             />
           )}
         </>

@@ -9,13 +9,18 @@ const SubmitBlock = createReactBlockSpec(
     type: "submit",
     propSchema: {
       textAlignment: defaultProps.textAlignment,
+      title: {
+        default: "Submit",
+      },
     },
+
     content: "inline",
   },
   {
     render: (props) => {
+      // props.editor.addStyles(background:"red")
       return (
-        <>
+        <div className=" flex justify-center items-center  ">
           <button
             onClick={async () => {
               if (props.editor.isEditable) return;
@@ -39,11 +44,11 @@ const SubmitBlock = createReactBlockSpec(
                 console.error("Submission failed:", err);
               }
             }}
-            className="mt-3 text-white bg-black py-2 px-4 rounded-md"
+            className="text-white bg-black font-medium text-sm  py-1  cursor-pointer  px-4 rounded-md"
           >
-            Submit
+            {props.block.props.title}
           </button>
-        </>
+        </div>
       );
     },
   }

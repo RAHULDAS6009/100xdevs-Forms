@@ -25,7 +25,7 @@ export function Input({
     <>
       <div className="relative ">
         <input
-          className={`${className} w-full h-full  rounded-md border border-neutral-200
+          className={`${className} w-72 h-full  rounded-md border border-neutral-200
         
         
         placeholder-neutral-300

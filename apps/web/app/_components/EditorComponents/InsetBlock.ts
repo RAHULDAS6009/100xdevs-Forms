@@ -31,10 +31,18 @@ export const insertLabel = (editor: typeof schema.BlockNoteEditor) => ({
 export const insertInput = (editor: typeof schema.BlockNoteEditor) => ({
   title: "Input",
   subtext: "Input Block",
-  onItemClick: () =>
-    insertOrUpdateBlock(editor, {
-      type: "input",
-    }),
+  onItemClick: () => {
+    const currentBlock = editor.getTextCursorPosition().block;
+    editor.insertBlocks(
+      [
+        { type: "label", content: "" },
+        { type: "input", content: "" },
+      ],
+      currentBlock,
+      "after"
+    );
+    editor.removeBlocks([currentBlock.id]);
+  },
   group: "Basic blocks",
 });
 
