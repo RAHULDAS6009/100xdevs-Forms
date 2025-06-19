@@ -44,7 +44,8 @@ const SubmitBlock = createReactBlockSpec(
                 console.error("Submission failed:", err);
               }
             }}
-            className="text-white bg-black font-medium text-sm  py-1  cursor-pointer  px-4 rounded-md"
+            disabled
+            className="text-white bg-black font-medium text-sm w-35  py-2   cursor-not-allowed px-4 rounded-md"
           >
             {props.block.props.title}
           </button>

@@ -56,7 +56,7 @@ export default function Page() {
   return (
     <div className="grid grid-rows-6  h-full w-full scale-100 opacity-90">
       <div className="w-full row-span-2 bg-amber-100"></div>
-      <div className="mx-auto max-w-2xl row-span-6">
+      <div className="mx-auto max-w-2xl row-span-4">
         <div className="-translate-y-15 flex flex-col items-start">
           <Image
             className="rounded-full cursor-pointer hover:-translate-y-1 shadow-2xl shadow-slate-400"

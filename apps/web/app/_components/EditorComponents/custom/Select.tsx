@@ -91,11 +91,11 @@ export const SelectBlock = createReactBlockSpec(
             isFirstSelect && (
               <select
                 onChange={handleChange}
-                className="border border-gray-300 rounded px-2 py-1 text-sm w-full"
+                className="border cursor-pointer text-neutral-400 font-medium border-gray-300 rounded px-1 py-3 text-sm w-72 outline-none focus:ring-2 focus:ring-blue-400/50"
                 defaultValue=""
               >
                 <option value="" disabled hidden>
-                  -- Select an option --
+                  Select an option
                 </option>
                 {filteredSelectBlocks.map((block) => {
                   const text = getOptionText(block);
