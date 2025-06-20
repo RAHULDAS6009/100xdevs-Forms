@@ -182,9 +182,53 @@ app.put("/form/:id/submission", async (req: Request, res: Response) => {
     const existingSubmissions = form?.submissions || "";
     const newSubmission = req.body.submissions || "";
 
+    // console.log("exsisiting: ", existingSubmissions);
+    // console.log("new Submission: ", newSubmission);
+
     const updatedSubmissions = existingSubmissions
       ? `${existingSubmissions}\n${newSubmission}`
       : newSubmission;
+
+    const neArr = updatedSubmissions.split("\n").map((arr: string) => {
+      return JSON.parse(arr);
+    });
+
+    const neArr1 = neArr.flat().map((item: any) => {
+      return item.name;
+    });
+
+    const submissionElement = [...new Set(neArr1)]; //Name.section
+
+    console.log(neArr1);
+    console.log(submissionElement);
+
+    const findVal = (i: number) =>
+      neArr
+        .flat()
+        .filter((item: any) => {
+          return item.name == submissionElement[i];
+          // return submissionElement.map((itesm) => {
+          //   return item.name == itesm;
+          // });
+        })
+        .map((item: any) => {
+          return item.value;
+        });
+
+    let obj1 = [];
+
+    for (let i = 0; i < submissionElement.length; i++) {
+      obj1.push({
+        title: submissionElement[i],
+        values: findVal(i),
+      });
+    }
+
+    // Object.assign(obj,{submissionElement:findVal})
+    // let keyName = submissionElement[0];
+    // obj[keyName] = findVal;
+
+    console.log("Hi ", findVal);
 
     await client.form.update({
       where: { id: req.params.id },
