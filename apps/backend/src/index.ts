@@ -168,6 +168,80 @@ app.get("/form/:id", async (req: Request, res: Response) => {
 });
 
 //create submission /public url
+// app.put("/form/:id/submission", async (req: Request, res: Response) => {
+//   try {
+//     const form = await client.form.findFirst({
+//       where: { id: req.params.id },
+//       select: { submissions: true },
+//     });
+
+//     if (!form) {
+//       res.status(404).json({ msg: "Form not found" });
+//     }
+
+//     const existingSubmissions = form?.submissions || "";
+//     const newSubmission = req.body.submissions || "";
+
+//     // console.log("exsisiting: ", existingSubmissions);
+//     // console.log("new Submission: ", newSubmission);
+
+//     const updatedSubmissions = existingSubmissions
+//       ? `${existingSubmissions}\n${newSubmission}`
+//       : newSubmission;
+
+//     const neArr = updatedSubmissions.split("\n").map((arr: string) => {
+//       return JSON.parse(arr);
+//     });
+
+//     const neArr1 = neArr.flat().map((item: any) => {
+//       return item.name;
+//     });
+
+//     const submissionElement = [...new Set(neArr1)]; //Name.section
+
+//     console.log(neArr1);
+//     console.log(submissionElement);
+
+//     const findVal = (i: number) =>
+//       neArr
+//         .flat()
+//         .filter((item: any) => {
+//           return item.name == submissionElement[i];
+//           // return submissionElement.map((itesm) => {
+//           //   return item.name == itesm;
+//           // });
+//         })
+//         .map((item: any) => {
+//           return item.value;
+//         });
+
+//     let obj1 = [];
+
+//     for (let i = 0; i < submissionElement.length; i++) {
+//       obj1.push({
+//         title: submissionElement[i],
+//         values: findVal(i),
+//       });
+//     }
+
+//     // Object.assign(obj,{submissionElement:findVal})
+//     // let keyName = submissionElement[0];
+//     // obj[keyName] = findVal;
+
+//     console.log("Hi ", findVal);
+
+//     await client.form.update({
+//       where: { id: req.params.id },
+//       data: { submissions: updatedSubmissions },
+//     });
+
+//     res.json({ msg: "Submission done" });
+//   } catch (error) {
+//     console.error("Submission error:", error);
+//     res.status(500).json({ msg: "Something went wrong" });
+//   }
+// });
+
 app.put("/form/:id/submission", async (req: Request, res: Response) => {
   try {
     const form = await client.form.findFirst({
@@ -179,62 +253,36 @@ app.put("/form/:id/submission", async (req: Request, res: Response) => {
       res.status(404).json({ msg: "Form not found" });
     }
 
-    const existingSubmissions = form?.submissions || "";
     const newSubmission = req.body.submissions || "";
 
-    // console.log("exsisiting: ", existingSubmissions);
-    // console.log("new Submission: ", newSubmission);
+    const inputArray = JSON.parse(newSubmission);
 
-    const updatedSubmissions = existingSubmissions
-      ? `${existingSubmissions}\n${newSubmission}`
-      : newSubmission;
-
-    const neArr = updatedSubmissions.split("\n").map((arr: string) => {
-      return JSON.parse(arr);
-    });
-
-    const neArr1 = neArr.flat().map((item: any) => {
+    const newArr = JSON.parse(newSubmission).map((item: any) => {
       return item.name;
     });
 
-    const submissionElement = [...new Set(neArr1)]; //Name.section
+    const output = newArr.reduce((acc: any, field: string) => {
+      acc[field] = null;
+      return acc;
+    }, {});
 
-    console.log(neArr1);
-    console.log(submissionElement);
-
-    const findVal = (i: number) =>
-      neArr
-        .flat()
-        .filter((item: any) => {
-          return item.name == submissionElement[i];
-          // return submissionElement.map((itesm) => {
-          //   return item.name == itesm;
-          // });
-        })
-        .map((item: any) => {
-          return item.value;
-        });
-
-    let obj1 = [];
-
-    for (let i = 0; i < submissionElement.length; i++) {
-      obj1.push({
-        title: submissionElement[i],
-        values: findVal(i),
-      });
-    }
-
-    // Object.assign(obj,{submissionElement:findVal})
-    // let keyName = submissionElement[0];
-    // obj[keyName] = findVal;
-
-    console.log("Hi ", findVal);
-
-    await client.form.update({
-      where: { id: req.params.id },
-      data: { submissions: updatedSubmissions },
+    inputArray.forEach((item: any) => {
+      output[item.name] = item.value;
     });
 
+    let allSubmissions =
+      form?.submissions === null
+        ? JSON.stringify([output])
+        : JSON.stringify([...JSON.parse(form?.submissions as string), output]);
+
+    await client.form.update({
+      where: {
+        id: req.params.id,
+      },
+      data: {
+        submissions: allSubmissions,
+      },
+    });
     res.json({ msg: "Submission done" });
   } catch (error) {
     console.error("Submission error:", error);

@@ -149,7 +149,7 @@ export default function EditPage({ formid }: { formid: string }) {
           <input
             tabIndex={-1}
             ref={inputRef}
-            value={findForm?.title}
+            // value={findForm?.title}
             onChange={(e) => {
               setTitle(e.target.value);
               console.log(title);
