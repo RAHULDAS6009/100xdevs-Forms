@@ -2,25 +2,31 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { BACKEND_URL } from "./EditPage";
-import DownloadCSV from "../../../components/DownloadCSV";
+import { jsonToCsv } from "../../../lib/helper";
 const data =
   "Name,Age,Profession\nJohn Doe,30,Developer\nJane Smith,25,Designer";
 
 export default function SubmissionPage({ formid }: { formid: string }) {
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [headArr, setHeadArr] = useState<string[]>([]);
+  const [csv, setCSV] = useState("");
   // Fetch data
   useEffect(() => {
     async function callAPI() {
       const res = await axios.get(`${BACKEND_URL}/form/${formid}/submission`);
       const parsed = JSON.parse(res.data.submissions.submissions);
+      console.log(res.data.submissions.submissions);
       setSubmissions(parsed);
+      setCSV(jsonToCsv(JSON.parse(res.data.submissions.submissions)));
     }
 
     callAPI();
   }, [formid]);
 
-  // After submissions are set, extract headers
+  useEffect(() => {
+    console.log(submissions);
+  }, [submissions]);
+
   useEffect(() => {
     if (submissions.length > 0) {
       const allKeys = Array.from(
@@ -30,10 +36,36 @@ export default function SubmissionPage({ formid }: { formid: string }) {
     }
   }, [submissions]);
 
+  function handleDownload() {
+    const blob = new Blob([csv], { type: "data:text/csv;charset=utf-8," });
+    console.log(blob);
+    const blobURL = window.URL.createObjectURL(blob);
+    console.log(blobURL);
+
+    const anchor = document.createElement("a");
+    anchor.download = "export.csv";
+    anchor.href = blobURL;
+    anchor.dataset.downloadurl = [
+      "text/csv",
+      anchor.download,
+      anchor.href,
+    ].join(":");
+    anchor.click();
+
+    setTimeout(() => {
+      URL.revokeObjectURL(blobURL);
+    }, 100);
+  }
+
   return (
     <div>
       <h2>All submissions</h2>
-      <DownloadCSV data={data} fileName={"em"} />
+      <button
+        className="text-sm font-bold py-2 px-4 rounded-md cursor-pointer bg-neutral-400  mx-2"
+        onClick={handleDownload}
+      >
+        Download CSV
+      </button>
       <table border={1}>
         <thead>
           <tr>
