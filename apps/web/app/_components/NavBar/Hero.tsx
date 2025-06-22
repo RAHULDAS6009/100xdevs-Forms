@@ -27,26 +27,25 @@ export function Hero() {
       </div>
 
       <div className="flex flex-col mx-auto items-center gap-1  pt-16">
-        <Button variant="primary" className="flex items-center gap-3">
-          <Link href={"/create"} prefetch={false}>
+        <Link href={"/create"}>
+          <Button variant="primary" className="flex items-center gap-3">
             Create a free form
-            <LoadingIndicator />
-          </Link>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="3"
-            stroke="currentColor"
-            className="size-4 "
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-            />
-          </svg>
-        </Button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="3"
+              stroke="currentColor"
+              className="size-4 "
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+              />
+            </svg>
+          </Button>
+        </Link>
         <span className="text-xs text-slate-400">No sign up required</span>
       </div>
 
