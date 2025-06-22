@@ -11,7 +11,7 @@ import { redirect, usePathname } from "next/navigation";
 // import { useRouter } from "next/router";
 export const BACKEND_URL = "http://localhost:5000";
 
-export default function EditPage({ formid }: { formid: string }) {
+export default function EditPage({ formid }: { formid: any }) {
   const router = usePathname();
   if (!formid) return <div>No blocks</div>;
   const [open, setOpen] = useState<boolean>(false);
