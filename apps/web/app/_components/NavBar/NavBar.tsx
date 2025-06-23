@@ -1,10 +1,9 @@
 import Button from "@repo/ui/button";
 import Logo from "../../../components/Logo";
-import { redirect } from "next/navigation";
-import Link from "next/link";
-import LoadingIndicator from "../../../components/LoadingIndicator";
+import { redirect, useRouter } from "next/navigation";
 
 export default function NavBar() {
+  const router = useRouter();
   return (
     <div className="w-full flex justify-between p-4 items-center">
       <Logo />
@@ -18,16 +17,14 @@ export default function NavBar() {
           return (
             <Button
               variant="secondary"
-              onClick={() => {
-                redirect(`${item.route}`);
-              }}
               key={index}
+              onClick={() => router.push(`${item.route}`)}
             >
               {item.title}
             </Button>
           );
         })}
-        <Button variant="primary" onClick={() => redirect("/create")}>
+        <Button variant="primary" onClick={() => router.push("/create")}>
           {/* <Link href={"/create"} prefetch={false}> */}
           Create form
           {/* <LoadingIndicator /> */}
