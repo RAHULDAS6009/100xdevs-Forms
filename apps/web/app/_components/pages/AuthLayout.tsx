@@ -2,7 +2,7 @@
 import { Input } from "@repo/ui/input";
 import { MdMail } from "react-icons/md";
 import { IoPersonCircleSharp } from "react-icons/io5";
-import { RiAlignLeft, RiLockPasswordFill } from "react-icons/ri";
+import { RiLockPasswordFill } from "react-icons/ri";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 
 import Button from "@repo/ui/button";

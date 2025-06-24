@@ -1,7 +1,6 @@
 import Button from "@repo/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import LoadingIndicator from "../../../components/LoadingIndicator";
 export function Hero() {
   return (
     <div className=" flex flex-col  h-[950px] pt-20  p-5">

@@ -1,6 +1,7 @@
 import Button from "@repo/ui/button";
 import Logo from "../../../components/Logo";
 import { redirect, useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function NavBar() {
   const router = useRouter();
@@ -15,21 +16,25 @@ export default function NavBar() {
           { title: "Sign up", route: "/signup" },
         ].map((item, index) => {
           return (
-            <Button
-              variant="secondary"
-              key={index}
-              onClick={() => router.push(`${item.route}`)}
-            >
-              {item.title}
-            </Button>
+            <Link href={`${item.route}`} key={index}>
+              <Button
+                variant="secondary"
+                key={index}
+                // onClick={() => router.push(`${item.route}`)}
+              >
+                {item.title}
+              </Button>
+            </Link>
           );
         })}
-        <Button variant="primary" onClick={() => router.push("/create")}>
-          {/* <Link href={"/create"} prefetch={false}> */}
-          Create form
-          {/* <LoadingIndicator /> */}
-          {/* </Link> */}
-        </Button>
+        <Link href={"/create"}>
+          <Button variant="primary">
+            {/* <Link href={"/create"} prefetch={false}> */}
+            Create form
+            {/* <LoadingIndicator /> */}
+            {/* </Link> */}
+          </Button>
+        </Link>
       </div>
     </div>
   );
