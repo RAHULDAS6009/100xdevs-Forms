@@ -4,13 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import EditorPreview from "../EditorPreview";
 import { Editor } from "../DynamicEditor";
 import Button from "@repo/ui/button";
-import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
-import { updateForm } from "../../../lib/slices/FormSlice";
+import { useAppDispatch, useAppSelector } from "../../lib/hooks";
+import { updateForm } from "../../lib/slices/FormSlice";
 import axios from "axios";
 import { redirect, usePathname } from "next/navigation";
 export const BACKEND_URL = "http://localhost:5000";
 
-export default function EditPage({ formid }: { formid: any }) {
+export default function EditPage({ formid }: { formid: string }) {
   const router = usePathname();
   if (!formid) return <div>No blocks</div>;
   const [open, setOpen] = useState<boolean>(false);

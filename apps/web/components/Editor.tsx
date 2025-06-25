@@ -1,10 +1,4 @@
-import {
-  Block,
-  BlockNoteEditor,
-  BlockSchema,
-  filterSuggestionItems,
-  PartialBlock,
-} from "@blocknote/core";
+import { filterSuggestionItems } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import {
   AddBlockButton,
@@ -23,16 +17,15 @@ import {
 
 import "@blocknote/mantine/style.css";
 
-import { useEffect, useState } from "react";
-import "../globals.css";
+import { useEffect } from "react";
 import { schema } from "./EditorComponents/schema";
 import {
   insertInput,
   insertLabel,
   insertSelect,
 } from "./EditorComponents/InsetBlock";
-import { useAppDispatch, useAppSelector } from "../../lib/hooks";
-import { updateForm } from "../../lib/slices/FormSlice";
+import { useAppDispatch, useAppSelector } from "../lib/hooks";
+import { updateForm } from "../lib/slices/FormSlice";
 import { MdDelete, MdSettings } from "react-icons/md";
 
 type CustomEditor = typeof schema.blockSchema;

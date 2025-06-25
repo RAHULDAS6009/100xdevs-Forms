@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { Form } from "../../../types";
 import axios from "axios";
 import { BlockNoteView } from "@blocknote/mantine";
-import { BACKEND_URL } from "../../_components/pages/EditPage";
-import { schema } from "../../_components/EditorComponents/schema";
+import { BACKEND_URL } from "../../../components/pages/EditPage";
+import { schema } from "../../../components/EditorComponents/schema";
 import { useParams } from "next/navigation";
 import { BlockNoteEditor } from "@blocknote/core";
 

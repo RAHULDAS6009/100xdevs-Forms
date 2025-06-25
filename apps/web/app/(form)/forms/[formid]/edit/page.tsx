@@ -1,6 +1,10 @@
-import EditPage from "../../../../_components/pages/EditPage";
+import EditPage from "../../../../../components/pages/EditPage";
 
-export default function Home({ params }: { params: { formid: string } }) {
-  const formId = params.formid;
-  return <EditPage formid={formId} />;
+interface PageProps {
+  params: Promise<{ formid: string }>;
+}
+
+export default async function Home({ params }: PageProps) {
+  const { formid } = await params;
+  return <EditPage formid={formid} />;
 }

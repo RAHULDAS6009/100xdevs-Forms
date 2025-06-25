@@ -1,5 +1,4 @@
-import DashBoard from "../../_components/pages/DashBoard";
-import { useForms } from "../../_hooks/useGetForms";
+import DashBoard from "../../../components/pages/DashBoard";
 
 export default function Home() {
   return <DashBoard />;

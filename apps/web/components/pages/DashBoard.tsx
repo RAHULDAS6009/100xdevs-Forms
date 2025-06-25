@@ -3,10 +3,10 @@ import Button from "@repo/ui/button";
 import axios from "axios";
 import { BACKEND_URL } from "./EditPage";
 import { redirect } from "next/navigation";
-import { useForms } from "../../_hooks/useGetForms";
-import { Form } from "../../../types";
-import { useAppDispatch } from "../../../lib/hooks";
-import { addForm, setForms } from "../../../lib/slices/FormSlice";
+import { useForms } from "../../hooks/useGetForms";
+import { Form } from "../../types";
+import { useAppDispatch } from "../../lib/hooks";
+import { addForm } from "../../lib/slices/FormSlice";
 
 export default function DashBoard() {
   const forms = useForms() || [];

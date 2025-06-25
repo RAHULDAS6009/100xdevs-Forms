@@ -1,4 +1,4 @@
-import AuthLayout from "../_components/pages/AuthLayout";
+import AuthLayout from "../../components/pages/AuthLayout";
 
 export default function () {
   return <AuthLayout type="signin" />;

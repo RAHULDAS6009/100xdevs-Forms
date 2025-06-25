@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { BACKEND_URL } from "./EditPage";
-import { jsonToCsv } from "../../../lib/helper";
+import { jsonToCsv } from "../../lib/helper";
 const data =
   "Name,Age,Profession\nJohn Doe,30,Developer\nJane Smith,25,Designer";
 

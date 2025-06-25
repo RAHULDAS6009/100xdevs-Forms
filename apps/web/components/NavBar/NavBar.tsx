@@ -1,6 +1,6 @@
 import Button from "@repo/ui/button";
-import Logo from "../../../components/Logo";
-import { redirect, useRouter } from "next/navigation";
+import Logo from "../components/Logo";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function NavBar() {

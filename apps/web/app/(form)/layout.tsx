@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode, useEffect, useState } from "react";
-import SideBar from "../_components/SideBar";
-import { useForms } from "../_hooks/useGetForms";
+import SideBar from "../../components/SideBar";
+import { useForms } from "../../hooks/useGetForms";
 
 export default function ({ children }: { children: ReactNode }) {
   useForms();

@@ -1,4 +1,4 @@
-import EditPage from "../_components/pages/EditPage";
+import EditPage from "../../components/pages/EditPage";
 
 export default function Page() {
   return (

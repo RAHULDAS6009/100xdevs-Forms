@@ -1,9 +1,9 @@
 import axios from "axios";
-import { BACKEND_URL } from "../_components/pages/EditPage";
+import { BACKEND_URL } from "../components/pages/EditPage";
 import { useEffect, useState } from "react";
-import { Form } from "../../types";
-import { useAppDispatch } from "../../lib/hooks";
-import { setForms } from "../../lib/slices/FormSlice";
+import { Form } from "../types";
+import { useAppDispatch } from "../lib/hooks";
+import { setForms } from "../lib/slices/FormSlice";
 
 export function useForms() {
   const [allforms, setAllForms] = useState<Form[] | undefined>([]);
