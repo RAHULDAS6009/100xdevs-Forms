@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/hello", (req: Request, res: Response) => {
-  res.send("hello");
+  res.send("hello1");
 });
 
 app.post("/signup", async (req: Request, res: Response) => {
