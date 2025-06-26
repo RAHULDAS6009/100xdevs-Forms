@@ -16,7 +16,6 @@ export default function Page() {
   const [form, setForm] = useState<Form | null>(null);
   const [editor, setEditor] = useState<CustomEditorSchema | null>(null);
 
-  // Fetch form data
   useEffect(() => {
     async function fetchForm() {
       try {
@@ -31,7 +30,6 @@ export default function Page() {
     fetchForm();
   }, [params.formid]);
 
-  // Create the editor when form.blocks is ready
   useEffect(() => {
     if (!form?.blocks) return;
 
