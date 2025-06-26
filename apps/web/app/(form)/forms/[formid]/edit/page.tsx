@@ -1,6 +1,6 @@
 import EditPage from "../../../../../components/pages/EditPage";
 
-interface PageProps {
+export interface PageProps {
   params: Promise<{ formid: string }>;
 }
 
