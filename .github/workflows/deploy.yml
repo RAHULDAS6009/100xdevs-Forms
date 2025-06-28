@@ -18,7 +18,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push Docker image
+      - name: Build and Push frontend Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -29,6 +29,19 @@ jobs:
       - name: Verify Pushed Image
         run: docker pull rahulcs26/100xforms:latest
 
+      - name: Build and Push backend Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/Dockerfile.backend
+          push: true
+          tags: rahulcs26/100xforms-backend:latest
+          build-args: |
+            DATABASE_URL=${{ secrets.PROD_DATABASE }}
+
+      - name: Verify Pushed Image
+        run: docker pull rahulcs26/100xforms-backend:latest
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
@@ -37,6 +50,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             sudo docker pull rahulcs26/100xforms:latest
+            sudo docker pull rahulcs26/100xforms-backend:latest
             sudo docker stop web-app || true
             sudo docker rm web-app || true
+            sudo docker stop web-backend || true
+            sudo docker rm web-backend || true
             sudo docker run -d --name web-app -p 3005:3000 rahulcs26/100xforms:latest
+            sudo docker run -d --name web-backend -p 5000:5000 rahulcs26/100xforms-backend:latest
