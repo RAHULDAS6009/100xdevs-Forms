@@ -76,6 +76,8 @@ export default function AuthLayout({ type }: { type: "signin" | "signup" }) {
 
             type == "signin" &&
               localStorage.setItem("token", "Bearer " + res.data.token);
+
+            redirect("/dashboard");
           }}
         >
           Sign In
