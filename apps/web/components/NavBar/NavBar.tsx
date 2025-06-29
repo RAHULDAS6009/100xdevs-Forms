@@ -11,7 +11,7 @@ export default function NavBar() {
 
       <div className="flex gap-4">
         {[
-          { title: "Pricing 1", route: "/" },
+          { title: "Pricing", route: "/" },
           { title: "Login", route: "/signin" },
           { title: "Sign up", route: "/signup" },
         ].map((item, index) => {

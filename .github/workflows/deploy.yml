@@ -54,6 +54,7 @@ jobs:
             sudo docker stop web-backend || true
             sudo docker rm web-backend || true
             docker system prune -f
+            docker system prune -a -f --volumes
             sudo docker pull rahulcs26/100xforms:latest
             sudo docker pull rahulcs26/100xforms-backend:latest
             sudo docker run -d --name web-app -p 3005:3000 rahulcs26/100xforms:latest
