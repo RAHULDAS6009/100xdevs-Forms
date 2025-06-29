@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { updateForm } from "../../lib/slices/FormSlice";
 import axios from "axios";
 import { redirect, usePathname } from "next/navigation";
-export const BACKEND_URL = "https://backend.forms.rahuldev.live";
+export const BACKEND_URL = "http://localhost:5005";
 
 export default function EditPage({ formid }: { formid: string }) {
   const router = usePathname();
