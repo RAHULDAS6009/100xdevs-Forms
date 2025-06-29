@@ -9,7 +9,7 @@ const port = 5000;
 app.use(express.json());
 
 const corsOptions = {
-  origin: "http://localhost:3005",
+  origin: "https://100xforms.rahuldev.live",
   methods: "GET,POST,PUT,DELETE",
 };
 
