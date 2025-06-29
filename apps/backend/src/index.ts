@@ -8,7 +8,12 @@ const port = 5000;
 
 app.use(express.json());
 
-app.use(cors());
+const corsOptions = {
+  origin: "https://100xforms.rahuldev.live",
+  methods: "GET,POST,PUT,DELETE",
+};
+
+app.use(cors(corsOptions));
 
 app.get("/hello", (req: Request, res: Response) => {
   res.send("hello123");
