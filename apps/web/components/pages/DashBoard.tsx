@@ -12,17 +12,9 @@ export default function DashBoard() {
   const forms = useForms() || [];
   const dispatch = useAppDispatch();
 
-  // const [form, setForm] = useState();
-
   return (
     <div className="w-full max-w-4xl mx-auto ">
       <div className="flex">
-        {/* <Input
-          variant="primary"
-          // onChange={() => {
-          //   setForm(e.target.value);
-          // }}
-        /> */}
         <Button
           variant="primary"
           onClick={async () => {
@@ -39,7 +31,6 @@ export default function DashBoard() {
             );
             console.log(res);
             dispatch(addForm(res.data.form));
-            // alert(res.data.msg);
             redirect(`/forms/${res.data.form.id}/edit`);
           }}
           className="flex gap-2"
@@ -68,10 +59,11 @@ export default function DashBoard() {
             <div
               onClick={() => redirect(`forms/${form.id}/edit`)}
               key={index}
-              className="rounded-md p-4 bg-neutral-100 hover:bg-neutral-200"
+              className="rounded-md p-4 bg-neutral-100 hover:bg-neutral-200 flex justify-between"
             >
               <span className="font-medium text-neutral-400">{form.title}</span>
               {form.isPublished ? "Edit" : null}
+              {form.isPublished ? "Link" : null}
             </div>
           );
         })}
