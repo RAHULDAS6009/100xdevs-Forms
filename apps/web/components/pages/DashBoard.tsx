@@ -10,30 +10,9 @@ import { addForm } from "../../lib/slices/FormSlice";
 import { ReactNode } from "react";
 
 export default function DashBoard() {
-  const forms = useForms() || [];
-  const dispatch = useAppDispatch();
+  const { allforms, loading } = useForms() || [];
 
-  if (!forms)
-    return (
-      <div>
-        <div role="status" className="w-full ml-60  max-w-4xl mx-auto pt-10">
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <div className="h-10   bg-gray-200 rounded-full dark:bg-gray-700 w-[500px] mb-4"></div>
-          <span className="sr-only">Loading...</span>
-        </div>
-      </div>
-    );
+  const dispatch = useAppDispatch();
 
   return (
     <div className="w-full max-w-4xl mx-auto pt-10">
@@ -77,34 +56,36 @@ export default function DashBoard() {
       </div>
 
       <div className="flex flex-col gap-5 pt-10">
-        {forms.map((form: Form, index) => {
+        {allforms.map((form: Form, index) => {
           return (
             <div
               key={index}
               className="rounded-md p-4 bg-neutral-100 hover:bg-neutral-200 flex justify-between items-center"
             >
               <span className="font-medium text-neutral-400">{form.title}</span>
-              {form.isPublished && (
-                <div className="flex gap-3 h-full">
-                  <Button2 onClick={() => redirect(`forms/${form.id}/edit`)}>
-                    Edit
-                  </Button2>
-                  <Button2
-                    onClick={() => {
-                      redirect(`/r/${form.id}`);
-                    }}
-                  >
-                    Link
-                  </Button2>
-                  <Button2
-                    onClick={() => {
-                      redirect(`/forms/${form.id}/submissions `);
-                    }}
-                  >
-                    Submission
-                  </Button2>
-                </div>
-              )}
+              <div className="flex gap-3 h-full">
+                <Button2 onClick={() => redirect(`forms/${form.id}/edit`)}>
+                  Edit
+                </Button2>
+                {form.isPublished && (
+                  <>
+                    <Button2
+                      onClick={() => {
+                        redirect(`/r/${form.id}`);
+                      }}
+                    >
+                      Link
+                    </Button2>
+                    <Button2
+                      onClick={() => {
+                        redirect(`/forms/${form.id}/submissions `);
+                      }}
+                    >
+                      Submission
+                    </Button2>
+                  </>
+                )}
+              </div>
             </div>
           );
         })}
@@ -122,7 +103,7 @@ function Button2({
 }) {
   return (
     <button
-      className="text-slate-400 rounded-md px-4 font-normal hover:bg-neutral-300 py-0.5 h-full  "
+      className="text-slate-400 rounded-md px-4 font-normal hover:bg-neutral-300 py-0.5 h-full cursor-pointer "
       onClick={onClick}
     >
       {children}

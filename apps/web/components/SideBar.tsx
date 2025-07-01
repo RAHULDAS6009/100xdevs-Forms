@@ -97,7 +97,7 @@ export default function SideBar() {
                 <SideComponent title="Home" />
               </div>
               <div className="text-xs">Workspace</div>
-              {forms.map((form, index) => (
+              {forms.allforms.map((form, index) => (
                 <SideComponent key={index} title={`${form.title}`} />
               ))}
             </div>

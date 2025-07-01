@@ -71,7 +71,7 @@ export default function Page() {
               <div className="outline-none text-[50px] font-bold">
                 {form.title}
               </div>
-              <div className="-translate-x-18 w-full flex flex-col items-start  ">
+              <div className="-translate-x-18 w-full flex flex-col items-start   ">
                 <BlockNoteView editable={false} editor={editor} theme="light" />
                 <button
                   onClick={async () => {
@@ -94,7 +94,7 @@ export default function Page() {
                       console.error("Submission failed:", err);
                     }
                   }}
-                  className="text-white bg-black font-medium text-sm w-35 ml-14  py-2   px-4 rounded-md fixed top-50"
+                  className="text-white bg-black font-medium text-sm w-35 ml-14  py-2   px-4 rounded-md    "
                 >
                   Submit
                 </button>
