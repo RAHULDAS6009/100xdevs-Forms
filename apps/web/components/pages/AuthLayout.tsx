@@ -74,10 +74,12 @@ export default function AuthLayout({ type }: { type: "signin" | "signup" }) {
 
             console.log(res);
 
-            type == "signin" &&
+            if (type == "signin") {
               localStorage.setItem("token", "Bearer " + res.data.token);
-
-            redirect("/dashboard");
+              redirect("/dashboard");
+            } else {
+              redirect("/signin");
+            }
           }}
         >
           Sign In

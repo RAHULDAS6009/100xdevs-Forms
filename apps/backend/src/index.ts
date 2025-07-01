@@ -13,6 +13,11 @@ const corsOptions = {
   methods: "GET,POST,PUT,DELETE",
 };
 
+// const corsOptions = {
+//   origin: "http://localhost:3001",
+//   methods: "GET,POST,PUT,DELETE",
+// };
+
 app.use(cors(corsOptions));
 
 app.get("/hello", (req: Request, res: Response) => {

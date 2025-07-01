@@ -19,37 +19,7 @@ const SubmitBlock = createReactBlockSpec(
   {
     render: (props) => {
       // props.editor.addStyles(background:"red")
-      return (
-        <div className=" flex justify-center items-center  ">
-          <button
-            onClick={async () => {
-              if (props.editor.isEditable) return;
-
-              const form = sessionStorage.getItem("form");
-              const formId = JSON.parse(form as string)?.id;
-
-              try {
-                const res = await axios.put(
-                  `${BACKEND_URL}/form/${formId}/submission`,
-                  {
-                    submissions: JSON.stringify(
-                      JSON.parse(form as string).submission
-                    ),
-                  }
-                );
-
-                console.log(res);
-                redirect("/dashboard");
-              } catch (err) {
-                console.error("Submission failed:", err);
-              }
-            }}
-            className="text-white bg-black font-medium text-sm w-35  py-2    px-4 rounded-md"
-          >
-            {props.block.props.title}
-          </button>
-        </div>
-      );
+      return <div className=" flex justify-center items-center  "></div>;
     },
   }
 );

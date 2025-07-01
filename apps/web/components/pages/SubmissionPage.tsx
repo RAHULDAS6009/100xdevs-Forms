@@ -3,8 +3,6 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { BACKEND_URL } from "./EditPage";
 import { jsonToCsv } from "../../lib/helper";
-const data =
-  "Name,Age,Profession\nJohn Doe,30,Developer\nJane Smith,25,Designer";
 
 export default function SubmissionPage({ formid }: { formid: string }) {
   const [submissions, setSubmissions] = useState<any[]>([]);
@@ -14,18 +12,16 @@ export default function SubmissionPage({ formid }: { formid: string }) {
   useEffect(() => {
     async function callAPI() {
       const res = await axios.get(`${BACKEND_URL}/form/${formid}/submission`);
-      const parsed = JSON.parse(res.data.submissions.submissions);
-      console.log(res.data.submissions.submissions);
+      const parsed = JSON.parse(res.data.submissions.submissions) || [];
       setSubmissions(parsed);
-      setCSV(jsonToCsv(JSON.parse(res.data.submissions.submissions)));
+
+      if (parsed.length !== 0) {
+        setCSV(jsonToCsv(JSON.parse(res.data.submissions.submissions)));
+      }
     }
 
     callAPI();
   }, [formid]);
-
-  useEffect(() => {
-    console.log(submissions);
-  }, [submissions]);
 
   useEffect(() => {
     if (submissions.length > 0) {
@@ -60,12 +56,15 @@ export default function SubmissionPage({ formid }: { formid: string }) {
   return (
     <div>
       <h2>All submissions</h2>
-      <button
-        className="text-sm font-bold py-2 px-4 rounded-md cursor-pointer bg-neutral-400  mx-2"
-        onClick={handleDownload}
-      >
-        Download CSV
-      </button>
+
+      {submissions.length !== 0 && (
+        <button
+          className="text-sm font-bold py-2 px-4 rounded-md cursor-pointer bg-neutral-400  mx-2"
+          onClick={handleDownload}
+        >
+          Download CSV
+        </button>
+      )}
       <table border={1}>
         <thead>
           <tr>

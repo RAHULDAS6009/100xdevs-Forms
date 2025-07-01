@@ -3,11 +3,14 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { redirect, usePathname } from "next/navigation";
+import { useForms } from "../hooks/useGetForms";
 
 export default function SideBar() {
   const [open, setOpen] = useState<boolean>(true);
 
   const router = usePathname();
+
+  const forms = useForms() || [];
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -94,7 +97,9 @@ export default function SideBar() {
                 <SideComponent title="Home" />
               </div>
               <div className="text-xs">Workspace</div>
-              <SideComponent title="editing form" />
+              {forms.map((form, index) => (
+                <SideComponent key={index} title={`${form.title}`} />
+              ))}
             </div>
           </div>
         </div>
