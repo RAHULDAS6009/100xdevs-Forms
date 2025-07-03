@@ -21,7 +21,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get("/hello", (req: Request, res: Response) => {
-  res.send("hello123");
+  res.send("hello12345");
 });
 
 app.post("/signup", async (req: Request, res: Response) => {
