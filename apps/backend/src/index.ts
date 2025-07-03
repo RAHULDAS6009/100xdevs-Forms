@@ -8,15 +8,15 @@ const port = 5000;
 
 app.use(express.json());
 
-const corsOptions = {
-  origin: "https://100xforms.rahuldev.live",
-  methods: "GET,POST,PUT,DELETE",
-};
-
 // const corsOptions = {
-//   origin: "http://localhost:3001",
+//   origin: "https://100xforms.rahuldev.live",
 //   methods: "GET,POST,PUT,DELETE",
 // };
+
+const corsOptions = {
+  origin: "http://localhost:3001",
+  methods: "GET,POST,PUT,DELETE",
+};
 
 app.use(cors(corsOptions));
 

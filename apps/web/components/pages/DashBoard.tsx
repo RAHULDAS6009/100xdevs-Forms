@@ -8,6 +8,8 @@ import { Form } from "../../types";
 import { useAppDispatch } from "../../lib/hooks";
 import { addForm } from "../../lib/slices/FormSlice";
 import { ReactNode } from "react";
+import { Input } from "@repo/ui/input";
+import { CiSearch } from "react-icons/ci";
 
 export default function DashBoard() {
   const { allforms, loading } = useForms() || [];
@@ -53,9 +55,16 @@ export default function DashBoard() {
           </svg>
           Create a form
         </Button>
+        <Input
+          placeholder="Search here"
+          type="text"
+          position="right"
+          icon={<CiSearch />}
+        />
       </div>
 
       <div className="flex flex-col gap-5 pt-10">
+        {loading && <div>loading..........</div>}
         {allforms.map((form: Form, index) => {
           return (
             <div
