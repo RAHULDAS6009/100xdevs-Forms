@@ -5,7 +5,7 @@ export function Hero() {
   return (
     <div className=" flex flex-col  h-[950px] pt-20  p-5">
       <div className="flex flex-col gap-6">
-        <div className="text-6xl font-bold text-center">
+        <div className="text-4xl sm:text-6xl font-bold text-center">
           The{" "}
           <span className=" relative">
             simplest
@@ -19,7 +19,7 @@ export function Hero() {
           </span>{" "}
           way to create forms
         </div>
-        <div className="text-2xl font-[500] text-gray-500 text-center max-w-2xl  mx-auto">
+        <div className="text-xs sm:text-2xl font-[500] text-gray-500 text-center max-w-2xl  mx-auto">
           Say goodbye to boring forms. Meet 100XForms — the free, intuitive form
           builder you’ve been looking for.
         </div>

@@ -9,7 +9,7 @@ export default function NavBar() {
     <div className="w-full flex justify-between p-4 items-center">
       <Logo />
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 invisible sm:visible">
         {[
           { title: "Pricing", route: "/" },
           { title: "Login", route: "/signin" },
