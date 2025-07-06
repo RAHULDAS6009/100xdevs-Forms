@@ -3,14 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 export function Hero() {
   return (
-    <div className=" flex flex-col  h-[950px] pt-20  p-5">
+    <div className=" flex flex-col   sm:h-[950px]  sm:pt-20  p-5">
       <div className="flex flex-col gap-6">
         <div className="text-4xl sm:text-6xl font-bold text-center">
           The{" "}
           <span className=" relative">
             simplest
             <Image
-              className="w-full absolute bottom-0 right-0 mt-2"
+              className="w-full absolute  -bottom-1.5 right-0 mt-2"
               src={"/title-highlight-2.png"}
               width={100}
               height={50}
@@ -19,13 +19,13 @@ export function Hero() {
           </span>{" "}
           way to create forms
         </div>
-        <div className="text-xs sm:text-2xl font-[500] text-gray-500 text-center max-w-2xl  mx-auto">
+        <div className="text-sm sm:text-2xl font-[500] text-gray-500 text-center max-w-2xl  mx-auto">
           Say goodbye to boring forms. Meet 100XForms — the free, intuitive form
           builder you’ve been looking for.
         </div>
       </div>
 
-      <div className="flex flex-col mx-auto items-center gap-1  pt-16">
+      <div className="flex flex-col mx-auto items-center gap-1 pt-4 sm:pt-16">
         <Link href={"/create"}>
           <Button variant="primary" className="flex items-center gap-3">
             Create a free form
@@ -49,7 +49,7 @@ export function Hero() {
       </div>
 
       {/*  */}
-      <div className="mx-auto max-w-2xl    pt-12 drop-shadow-2xl transition-all ease-in-out duration-300 scale-100 hover:scale-105 cursor-pointer    ">
+      <div className="mx-auto max-w-2xl     pt-12 drop-shadow-2xl transition-all ease-in-out duration-300 scale-100 hover:scale-105 cursor-pointer    ">
         <div
           className="h-10 rounded-t-2xl flex gap-2 pt-3
         pl-2 bg-neutral-100
@@ -62,7 +62,7 @@ export function Hero() {
           <div className="rounded-full size-4 bg-neutral-300"></div>
         </div>
         <video
-          className="border  border-neutral-300"
+          className="border   border-neutral-300 rounded-b-sm"
           muted
           autoPlay
           loop
